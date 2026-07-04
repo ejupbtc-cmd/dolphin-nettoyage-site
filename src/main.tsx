@@ -9,12 +9,8 @@ const isAdmin = window.location.pathname.startsWith('/admin')
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {isAdmin ? (
-      <SiteDataProvider>
-        <AdminApp />
-      </SiteDataProvider>
-    ) : (
-      <App />
-    )}
+    <SiteDataProvider>
+      {isAdmin ? <AdminApp /> : <App />}
+    </SiteDataProvider>
   </StrictMode>,
 )
