@@ -33,16 +33,15 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden"
+      className="relative overflow-hidden pb-24 sm:pb-10"
       style={{
         background: 'var(--white)',
         borderTop: '1px solid var(--border-soft)',
         paddingTop: 'clamp(48px, 8vw, 72px)',
-        paddingBottom: '40px',
       }}
     >
       <div className="container-page">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-12">
 
           {/* Brand */}
           <div className="lg:col-span-1">
@@ -188,10 +187,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div
-          className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 text-xs"
+          className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-6 text-xs pr-16 sm:pr-0"
           style={{ borderTop: '1px solid var(--border-soft)', color: 'var(--text-muted)' }}
         >
-          <span>© {new Date().getFullYear()} Dolphin Nettoyage — Tous droits réservés</span>
+          <span>© {new Date().getFullYear()} Dolphin Nettoyage<span className="hidden sm:inline"> — Tous droits réservés</span></span>
           <div className="flex gap-5">
             <span>Mentions légales</span>
             <span>·</span>
