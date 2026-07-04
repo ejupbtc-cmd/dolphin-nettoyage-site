@@ -38,25 +38,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0"
-                style={{ background: 'rgba(46,134,171,0.15)', border: '1.5px solid rgba(91,192,222,0.3)' }}>
-                <img
-                  src="/src/assets/logo-dolphin.png"
-                  alt="Dolphin Nettoyage"
-                  className="w-full h-full object-contain p-1"
-                  onError={e => {
-                    const t = e.currentTarget as HTMLImageElement
-                    t.style.display = 'none'
-                    const p = t.parentElement
-                    if (p) p.innerHTML = '<span style="font-size:20px;display:flex;align-items:center;justify-content:center;height:100%;">🐬</span>'
-                  }}
-                />
-              </div>
-              <div>
-                <div className="font-bold text-white" style={{ fontFamily: 'Sora, sans-serif' }}>Dolphin Nettoyage</div>
-                <div className="text-xs text-[#5BC0DE] tracking-wide">Canton de Vaud</div>
-              </div>
+            <div className="mb-4">
+              <img
+                src="/src/assets/logo-dolphin.svg"
+                alt="Dolphin Nettoyage"
+                className="h-14 w-auto object-contain"
+                style={{ filter: 'brightness(0) invert(1) drop-shadow(0 0 4px rgba(127,219,255,0.3))' }}
+              />
             </div>
             <p className="text-sm text-[#6a90a8] leading-relaxed">
               Votre expert du nettoyage à domicile. Service haut de gamme pour particuliers et professionnels.

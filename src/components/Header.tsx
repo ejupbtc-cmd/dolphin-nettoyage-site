@@ -46,28 +46,12 @@ export default function Header() {
             onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
             className="flex items-center gap-3 group"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden flex-shrink-0"
-              style={{ background: 'rgba(46,134,171,0.15)', border: '1.5px solid rgba(91,192,222,0.3)' }}>
-              <img
-                src="/src/assets/logo-dolphin.png"
-                alt="Dolphin Nettoyage logo"
-                className="w-full h-full object-contain p-1"
-                onError={e => {
-                  const t = e.currentTarget as HTMLImageElement
-                  t.style.display = 'none'
-                  const parent = t.parentElement
-                  if (parent) parent.innerHTML = '<span style="font-size:22px;display:flex;align-items:center;justify-content:center;height:100%;">🐬</span>'
-                }}
-              />
-            </div>
-            <div>
-              <span className="font-semibold text-white text-base md:text-lg leading-tight block" style={{ fontFamily: 'Sora, sans-serif' }}>
-                Dolphin
-              </span>
-              <span className="text-xs text-[#7FDBFF] tracking-widest uppercase leading-tight block" style={{ letterSpacing: '0.2em' }}>
-                Nettoyage
-              </span>
-            </div>
+            <img
+              src="/src/assets/logo-dolphin.svg"
+              alt="Dolphin Nettoyage logo"
+              className="h-12 md:h-14 w-auto object-contain drop-shadow-lg"
+              style={{ filter: 'brightness(0) invert(1) drop-shadow(0 0 6px rgba(127,219,255,0.4))' }}
+            />
           </a>
 
           {/* Desktop Nav */}

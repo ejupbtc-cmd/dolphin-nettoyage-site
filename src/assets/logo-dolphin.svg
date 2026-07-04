@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 260" fill="none">
+  <defs>
+    <linearGradient id="dolphinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a4fa0"/>
+      <stop offset="50%" stop-color="#2563c4"/>
+      <stop offset="100%" stop-color="#1a3a8a"/>
+    </linearGradient>
+    <linearGradient id="dolphinBelly" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a9fd4"/>
+      <stop offset="100%" stop-color="#7ec8e8"/>
+    </linearGradient>
+    <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2e86c1"/>
+      <stop offset="100%" stop-color="#1a5a8a"/>
+    </linearGradient>
+    <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5dade2"/>
+      <stop offset="100%" stop-color="#2e86c1"/>
+    </linearGradient>
+    <linearGradient id="splashGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7fb3d3"/>
+      <stop offset="100%" stop-color="#aed6f1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- === WAVES === -->
+  <!-- Main wave body -->
+  <path d="M 30 165 Q 60 145 90 158 Q 120 170 155 152 Q 190 135 220 148 Q 250 160 280 148 L 285 185 Q 250 195 220 182 Q 190 170 155 185 Q 120 198 90 186 Q 60 175 30 190 Z" fill="url(#waveGrad1)"/>
+
+  <!-- Wave crest highlights -->
+  <path d="M 30 158 Q 60 138 90 150 Q 120 162 155 144 Q 190 127 220 140 Q 250 152 280 140" stroke="#5dade2" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7"/>
+
+  <!-- Secondary wave behind -->
+  <path d="M 20 178 Q 55 162 85 172 Q 115 182 145 168 Q 175 154 210 165 Q 240 175 275 163 L 290 200 Q 255 210 225 198 Q 195 186 160 198 Q 128 210 95 200 Q 62 190 20 205 Z" fill="url(#waveGrad2)" opacity="0.7"/>
+
+  <!-- Left splash curls -->
+  <path d="M 45 155 Q 38 135 50 120 Q 55 130 52 148 Z" fill="url(#splashGrad)"/>
+  <path d="M 58 148 Q 50 128 62 112 Q 68 124 65 144 Z" fill="url(#splashGrad)" opacity="0.8"/>
+  <path d="M 72 145 Q 65 128 76 115 Q 80 126 78 142 Z" fill="url(#splashGrad)" opacity="0.6"/>
+
+  <!-- Right splash curls -->
+  <path d="M 235 148 Q 228 128 240 114 Q 245 125 242 144 Z" fill="url(#splashGrad)"/>
+  <path d="M 248 145 Q 242 126 253 112 Q 258 123 255 141 Z" fill="url(#splashGrad)" opacity="0.8"/>
+  <path d="M 260 150 Q 253 132 264 118 Q 269 130 267 147 Z" fill="url(#splashGrad)" opacity="0.6"/>
+
+  <!-- Small splash droplets left -->
+  <ellipse cx="40" cy="118" rx="3" ry="4" fill="#7fb3d3" transform="rotate(-20 40 118)"/>
+  <ellipse cx="52" cy="108" rx="2" ry="3" fill="#aed6f1" transform="rotate(10 52 108)"/>
+  <ellipse cx="65" cy="112" rx="2" ry="3" fill="#7fb3d3" transform="rotate(-10 65 112)"/>
+
+  <!-- Small splash droplets right -->
+  <ellipse cx="240" cy="110" rx="3" ry="4" fill="#7fb3d3" transform="rotate(20 240 110)"/>
+  <ellipse cx="253" cy="105" rx="2" ry="3" fill="#aed6f1" transform="rotate(-10 253 105)"/>
+  <ellipse cx="265" cy="113" rx="2" ry="3" fill="#7fb3d3" transform="rotate(15 265 113)"/>
+
+  <!-- === DOLPHIN BODY === -->
+  <!-- Main body — arching upward left to right, nose pointing right-up -->
+  <g transform="translate(160, 118) rotate(-35)">
+    <!-- Tail fin -->
+    <path d="M -75 18 Q -90 8 -95 -5 Q -85 -2 -80 5 Q -88 -15 -85 -25 Q -75 -15 -73 0 Q -70 -10 -68 5 Z" fill="url(#dolphinGrad)"/>
+
+    <!-- Main body -->
+    <ellipse cx="0" cy="0" rx="78" ry="22" fill="url(#dolphinGrad)"/>
+
+    <!-- Belly lighter area -->
+    <ellipse cx="10" cy="6" rx="55" ry="12" fill="url(#dolphinBelly)" opacity="0.45"/>
+
+    <!-- Dorsal fin -->
+    <path d="M 15 -20 Q 28 -55 40 -48 Q 32 -30 28 -20 Z" fill="url(#dolphinGrad)"/>
+
+    <!-- Pectoral fin -->
+    <path d="M 5 8 Q 0 35 -10 38 Q -5 22 -8 10 Z" fill="url(#dolphinGrad)" opacity="0.85"/>
+
+    <!-- Head / snout -->
+    <ellipse cx="72" cy="-2" rx="18" ry="14" fill="url(#dolphinGrad)"/>
+    <!-- Snout tip -->
+    <path d="M 82 -3 Q 95 0 92 6 Q 84 5 80 2 Z" fill="url(#dolphinGrad)"/>
+
+    <!-- Eye -->
+    <circle cx="76" cy="-6" r="4" fill="white"/>
+    <circle cx="77" cy="-6" r="2.5" fill="#0d2d6b"/>
+    <circle cx="78" cy="-7" r="1" fill="white"/>
+
+    <!-- Mouth line -->
+    <path d="M 85 3 Q 90 6 88 9" stroke="#0d2d6b" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+
+    <!-- Smile -->
+    <path d="M 80 5 Q 85 9 90 7" stroke="#0d2d6b" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.6"/>
+  </g>
+
+  <!-- === SPARKLES === -->
+  <!-- Top left sparkle -->
+  <g transform="translate(68, 62)">
+    <line x1="0" y1="-8" x2="0" y2="8" stroke="#5dade2" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-8" y1="0" x2="8" y2="0" stroke="#5dade2" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-5" y1="-5" x2="5" y2="5" stroke="#5dade2" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="5" y1="-5" x2="-5" y2="5" stroke="#5dade2" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Top right sparkle -->
+  <g transform="translate(248, 72)">
+    <line x1="0" y1="-7" x2="0" y2="7" stroke="#5dade2" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-7" y1="0" x2="7" y2="0" stroke="#5dade2" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-4" y1="-4" x2="4" y2="4" stroke="#5dade2" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="4" y1="-4" x2="-4" y2="4" stroke="#5dade2" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Small dot sparkles -->
+  <circle cx="95" cy="50" r="3" fill="#7ec8e8"/>
+  <circle cx="220" cy="55" r="2.5" fill="#7ec8e8"/>
+  <circle cx="180" cy="42" r="2" fill="#aed6f1"/>
+  <circle cx="135" cy="60" r="1.8" fill="#5dade2"/>
+  <circle cx="260" cy="95" r="2.2" fill="#7ec8e8"/>
+
+  <!-- === TEXT === -->
+  <!-- DOLPHIN -->
+  <text
+    x="160" y="210"
+    text-anchor="middle"
+    font-family="'Arial Black', 'Impact', sans-serif"
+    font-weight="900"
+    font-size="42"
+    letter-spacing="3"
+    fill="#0d2d6b"
+  >DOLPHIN</text>
+
+  <!-- Decorative lines + NETTOYAGE -->
+  <line x1="28" y1="225" x2="78" y2="225" stroke="#0d2d6b" stroke-width="2"/>
+  <text
+    x="160" y="240"
+    text-anchor="middle"
+    font-family="'Arial', sans-serif"
+    font-weight="600"
+    font-size="18"
+    letter-spacing="6"
+    fill="#0d2d6b"
+  >NETTOYAGE</text>
+  <line x1="242" y1="225" x2="292" y2="225" stroke="#0d2d6b" stroke-width="2"/>
+</svg>
