@@ -11,12 +11,13 @@ export default function WaveDivider({ from, to, flip = false, height = 64 }: Wav
       <svg
         viewBox="0 0 1440 80"
         preserveAspectRatio="none"
+        className="wave-divider"
         style={{
           display: 'block',
           width: '100%',
-          height: `${height}px`,
+          '--wd-h': `${height}px`,
           transform: flip ? 'scaleX(-1)' : undefined,
-        }}
+        } as React.CSSProperties}
         aria-hidden="true"
       >
         <path
