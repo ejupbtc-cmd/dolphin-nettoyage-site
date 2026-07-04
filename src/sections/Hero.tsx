@@ -47,11 +47,10 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex flex-col justify-center items-center text-center overflow-hidden"
+      className="relative flex flex-col justify-center items-center text-center overflow-hidden min-h-svh sm:min-h-[90vh]"
       style={{
-        minHeight: '90vh',
-        paddingTop: '112px',
-        paddingBottom: '64px',
+        paddingTop: 'clamp(88px, 14vw, 112px)',
+        paddingBottom: 'clamp(40px, 8vw, 64px)',
         background: 'linear-gradient(170deg, #E8F4FC 0%, #F4F9FD 45%, #FFFFFF 100%)',
       }}
     >
@@ -132,14 +131,14 @@ export default function Hero() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="inline-flex items-center gap-2 rounded-full mb-6"
           style={{
-            padding: '12px 20px',
+            padding: '10px 16px',
             background: 'rgba(46,134,171,0.08)',
             border: '1px solid rgba(46,134,171,0.18)',
           }}
         >
-          <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--aqua)' }} />
+          <span className="w-2 h-2 rounded-full animate-pulse flex-shrink-0" style={{ background: 'var(--aqua)' }} />
           <span className="eyebrow">
-            Nettoyage professionnel — Canton de Vaud
+            Nettoyage professionnel<span className="hidden sm:inline"> — Canton de Vaud</span>
           </span>
         </motion.div>
 
@@ -190,7 +189,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.15, duration: 0.8 }}
-          className="flex flex-wrap justify-center gap-x-6 gap-y-3 sm:gap-8"
+          className="flex flex-col sm:flex-row items-center gap-3 sm:gap-8"
         >
           {trustItems.map(item => (
             <div key={item.label} className="flex items-center gap-2">
