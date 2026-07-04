@@ -114,7 +114,7 @@ export default function Contact() {
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="flex items-center gap-4 rounded-2xl transition-all duration-250 hover:-translate-y-0.5"
                 style={{
-                  padding: '20px 24px',
+                  padding: 'clamp(16px, 3vw, 20px) clamp(16px, 4vw, 24px)',
                   textDecoration: 'none',
                   ...item.style,
                 }}

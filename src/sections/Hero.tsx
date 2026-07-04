@@ -190,7 +190,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.15, duration: 0.8 }}
-          className="flex flex-wrap justify-center gap-8"
+          className="flex flex-wrap justify-center gap-x-6 gap-y-3 sm:gap-8"
         >
           {trustItems.map(item => (
             <div key={item.label} className="flex items-center gap-2">

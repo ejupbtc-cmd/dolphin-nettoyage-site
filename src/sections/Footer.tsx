@@ -37,7 +37,7 @@ export default function Footer() {
       style={{
         background: 'var(--white)',
         borderTop: '1px solid var(--border-soft)',
-        paddingTop: '72px',
+        paddingTop: 'clamp(48px, 8vw, 72px)',
         paddingBottom: '40px',
       }}
     >

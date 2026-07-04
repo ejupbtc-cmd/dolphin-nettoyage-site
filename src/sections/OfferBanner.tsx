@@ -105,7 +105,7 @@ export default function OfferBanner() {
               href="https://wa.me/41779915344"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp inline-flex items-center gap-3 rounded-full"
+              className="btn-whatsapp inline-flex items-center justify-center gap-3 rounded-full w-full sm:w-auto"
               style={{ fontSize: '16px', padding: '18px 36px' }}
             >
               <WaIcon />
