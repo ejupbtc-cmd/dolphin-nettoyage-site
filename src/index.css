@@ -19,8 +19,8 @@
   /* Typography */
   --color-heading:        #0F1C2E;
   --color-body:           #4A6580;
-  --color-muted:          #8BA4BA;
-  --color-label:          #2E86AB;
+  --color-muted:          #4F6B85;   /* darkened from #8BA4BA — was 2.6:1, now 5:1+ (WCAG AA) */
+  --color-label:          var(--color-brand-ocean); /* was #2E86AB at 4.1:1 on white, fails on #EEF4FA */
 
   /* Card system */
   --color-card-bg:        #FFFFFF;
@@ -238,4 +238,14 @@ h1, h2, h3, h4, h5 {
 :focus-visible {
   outline: 2px solid var(--color-brand-blue);
   outline-offset: 3px;
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

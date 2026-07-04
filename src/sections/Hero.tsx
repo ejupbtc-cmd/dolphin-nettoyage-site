@@ -131,7 +131,7 @@ export default function Hero() {
           }}
         >
           <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#5BC0DE' }} />
-          <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: '#2E86AB' }}>
+          <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: '#1E6091' }}>
             Nettoyage professionnel — Canton de Vaud
           </span>
         </motion.div>
