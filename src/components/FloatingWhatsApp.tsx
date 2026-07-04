@@ -2,16 +2,30 @@ import { motion } from 'framer-motion'
 
 export default function FloatingWhatsApp() {
   return (
-    <motion.a
+    <motion.div
+      className="fixed bottom-6 right-5 z-50"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 1.5, type: 'spring', stiffness: 300, damping: 20 }}
+    >
+      {/* Pulsing live-indicator rings */}
+      <span
+        className="pulse-wa absolute inset-0 rounded-full"
+        style={{ background: 'rgba(37,211,102,0.35)' }}
+        aria-hidden="true"
+      />
+      <span
+        className="pulse-wa absolute inset-0 rounded-full"
+        style={{ background: 'rgba(37,211,102,0.2)', animationDelay: '0.8s' }}
+        aria-hidden="true"
+      />
+      <motion.a
       href="https://wa.me/41779915344"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactez-nous sur WhatsApp"
-      className="fixed bottom-6 right-5 z-50 flex items-center gap-2.5 btn-whatsapp text-white rounded-full shadow-xl pulse-wa"
+      className="relative flex items-center gap-2.5 btn-whatsapp text-white rounded-full shadow-xl"
       style={{ padding: '12px 20px 12px 14px' }}
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: 1.5, type: 'spring', stiffness: 300, damping: 20 }}
       whileHover={{ scale: 1.06 }}
       whileTap={{ scale: 0.96 }}
     >
@@ -22,5 +36,6 @@ export default function FloatingWhatsApp() {
       </svg>
       <span className="text-sm font-semibold leading-none">WhatsApp</span>
     </motion.a>
+    </motion.div>
   )
 }

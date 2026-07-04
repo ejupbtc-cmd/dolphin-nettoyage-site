@@ -1,6 +1,26 @@
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Star } from 'lucide-react'
+
+function useCountUp(target: number | string, inView: boolean, duration = 1.8) {
+  const isNumber = typeof target === 'number'
+  const numTarget = isNumber ? target : parseFloat(target as string)
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (!inView || !isNumber) return
+    let start = 0
+    const step = numTarget / (duration * 60)
+    const id = setInterval(() => {
+      start += step
+      if (start >= numTarget) { setCount(numTarget); clearInterval(id) }
+      else setCount(parseFloat(start.toFixed(1)))
+    }, 1000 / 60)
+    return () => clearInterval(id)
+  }, [inView, numTarget, duration, isNumber])
+
+  return isNumber ? count : target
+}
 
 const testimonials = [
   {
@@ -29,11 +49,37 @@ const testimonials = [
   },
 ]
 
-function Stars() {
+function StatCounter({
+  value, suffix, label, inView, decimals = 0,
+}: { value: number; suffix: string; label: string; inView: boolean; decimals?: number }) {
+  const count = useCountUp(value, inView, 1.6) as number
+  const display = decimals > 0 ? count.toFixed(decimals) : Math.round(count).toString()
   return (
-    <div className="flex gap-0.5">
+    <div className="text-center">
+      <div
+        className="text-3xl sm:text-4xl font-black gradient-text"
+        style={{ fontFamily: 'Sora, sans-serif' }}
+        aria-live="polite"
+      >
+        {display}{suffix}
+      </div>
+      <div className="text-sm mt-1" style={{ color: '#8BA4BA' }}>{label}</div>
+    </div>
+  )
+}
+
+function Stars({ inView }: { inView: boolean }) {
+  return (
+    <div className="flex gap-0.5" role="img" aria-label="5 étoiles sur 5">
       {[...Array(5)].map((_, i) => (
-        <Star key={i} size={14} fill="#FFB800" color="#FFB800" />
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, scale: 0.4 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ delay: 0.05 * i, type: 'spring', stiffness: 300, damping: 18 }}
+        >
+          <Star size={14} fill="#FFB800" color="#FFB800" />
+        </motion.div>
       ))}
     </div>
   )
@@ -48,7 +94,7 @@ export default function Testimonials() {
       id="avis"
       ref={ref}
       className="relative py-24 px-4 overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #0B2545 0%, #091e3a 100%)' }}
+      style={{ background: '#FFFFFF' }}
     >
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
@@ -57,13 +103,11 @@ export default function Testimonials() {
           transition={{ duration: 0.7 }}
           className="text-center mb-14"
         >
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#5BC0DE] mb-4">
-            Avis clients
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">
+          <span className="section-label">Avis clients</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4" style={{ color: '#0F1C2E' }}>
             Ils nous font <span className="gradient-text">confiance</span>
           </h2>
-          <p className="text-[#a8cce0] text-lg max-w-xl mx-auto">
+          <p className="text-lg max-w-xl mx-auto" style={{ color: '#4A6580' }}>
             La satisfaction de nos clients est notre meilleure carte de visite.
             {/* Placeholder testimonials — to be replaced with real reviews */}
           </p>
@@ -76,30 +120,43 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 * i + 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-card rounded-2xl p-6 flex flex-col gap-4 group hover:scale-[1.02] transition-transform duration-300"
+              className="card rounded-2xl p-6 flex flex-col gap-4 group hover:scale-[1.02] transition-all duration-300"
             >
               <div className="flex items-center justify-between">
-                <Stars />
-                <span className="text-xs text-[#5BC0DE] font-medium px-2 py-1 rounded-full"
-                  style={{ background: 'rgba(91,192,222,0.1)', border: '1px solid rgba(91,192,222,0.2)' }}>
+                <Stars inView={inView} />
+                <span
+                  className="text-xs font-medium px-2.5 py-1 rounded-full"
+                  style={{
+                    background: 'rgba(46,134,171,0.08)',
+                    border: '1px solid rgba(46,134,171,0.18)',
+                    color: '#1E6091',
+                  }}
+                >
                   {t.service}
                 </span>
               </div>
 
-              <p className="text-[#c0d8e8] text-sm leading-relaxed flex-1">
+              <p className="text-sm leading-relaxed flex-1" style={{ color: '#4A6580' }}>
                 "{t.text}"
               </p>
 
-              <div className="flex items-center gap-3 pt-2 border-t border-white/5">
+              <div
+                className="flex items-center gap-3 pt-2 border-t"
+                style={{ borderColor: 'rgba(46,134,171,0.1)' }}
+              >
                 <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                  style={{ background: `${t.color}30`, border: `1.5px solid ${t.color}50`, color: t.color }}
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
+                  style={{
+                    background: `rgba(46,134,171,0.1)`,
+                    border: `1.5px solid rgba(46,134,171,0.2)`,
+                    color: '#1E6091',
+                  }}
                 >
                   {t.avatar}
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-white">{t.name}</div>
-                  <div className="text-xs text-[#6a90a8]">{t.location}</div>
+                  <div className="text-sm font-semibold" style={{ color: '#0F1C2E' }}>{t.name}</div>
+                  <div className="text-xs" style={{ color: '#8BA4BA' }}>{t.location}</div>
                 </div>
               </div>
             </motion.div>
@@ -111,20 +168,11 @@ export default function Testimonials() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.6, duration: 0.7 }}
-          className="flex flex-wrap justify-center gap-8 mt-12"
+          className="flex flex-wrap justify-center gap-12 mt-14"
         >
-          {[
-            { value: '5.0', label: 'Note moyenne' },
-            { value: '100+', label: 'Clients satisfaits' },
-            { value: '3 ans', label: "d'expérience" },
-          ].map(stat => (
-            <div key={stat.label} className="text-center">
-              <div className="text-3xl font-black gradient-text" style={{ fontFamily: 'Sora, sans-serif' }}>
-                {stat.value}
-              </div>
-              <div className="text-sm text-[#6a90a8]">{stat.label}</div>
-            </div>
-          ))}
+          <StatCounter value={5.0} suffix="" label="Note moyenne" inView={inView} decimals={1} />
+          <StatCounter value={100} suffix="+" label="Clients satisfaits" inView={inView} />
+          <StatCounter value={3} suffix=" ans" label="d'expérience" inView={inView} />
         </motion.div>
       </div>
     </section>

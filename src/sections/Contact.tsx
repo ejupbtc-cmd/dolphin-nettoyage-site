@@ -56,14 +56,13 @@ export default function Contact() {
       id="contact"
       ref={ref}
       className="relative py-24 px-4 overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #091e3a 0%, #061220 100%)' }}
+      style={{ background: '#EEF4FA' }}
     >
-      {/* Background glow */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div style={{
           position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)',
           width: '70%', height: '60%',
-          background: 'radial-gradient(ellipse, rgba(46,134,171,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(46,134,171,0.07) 0%, transparent 70%)',
           filter: 'blur(60px)',
         }} />
       </div>
@@ -75,24 +74,30 @@ export default function Contact() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Glass card */}
-          <div className="glass-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden"
-            style={{ boxShadow: '0 0 100px rgba(46,134,171,0.18), 0 20px 80px rgba(11,37,69,0.6)' }}>
+          <div
+            className="rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden"
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid rgba(46,134,171,0.12)',
+              boxShadow: '0 16px 64px rgba(46,134,171,0.1), 0 4px 16px rgba(11,37,69,0.06)',
+            }}
+          >
+            {/* Top accent line */}
+            <div
+              className="absolute top-0 left-1/4 right-1/4 h-[3px] rounded-b"
+              aria-hidden="true"
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(46,134,171,0.5), transparent)' }}
+            />
 
-            {/* Top glow line */}
-            <div className="absolute top-0 left-1/6 right-1/6 h-px"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(127,219,255,0.6), transparent)' }} />
+            <span className="section-label">Contactez-nous</span>
 
-            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#5BC0DE] mb-4">
-              Contactez-nous
-            </span>
-
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
+            <h2 className="text-3xl sm:text-4xl font-black mb-3" style={{ color: '#0F1C2E' }}>
               Votre devis gratuit en
               <br />
               <span className="gradient-text">moins de 24h</span>
             </h2>
 
-            <p className="text-[#a8cce0] text-base mb-10 max-w-md mx-auto">
+            <p className="text-base mb-10 max-w-md mx-auto" style={{ color: '#4A6580' }}>
               Décrivez-nous votre besoin via WhatsApp, par téléphone ou par email.
               Nous vous répondons rapidement avec une estimation claire et sans engagement.
             </p>
@@ -117,25 +122,40 @@ export default function Contact() {
             </div>
 
             {/* Social links */}
-            <div className="border-t border-white/5 pt-8">
-              <p className="text-xs text-[#6a90a8] mb-4 uppercase tracking-wider font-medium">Retrouvez-nous sur</p>
-              <div className="flex justify-center gap-4">
+            <div className="pt-8" style={{ borderTop: '1px solid rgba(46,134,171,0.1)' }}>
+              <p
+                className="text-xs mb-4 uppercase tracking-wider font-semibold"
+                style={{ color: '#8BA4BA' }}
+              >
+                Retrouvez-nous sur
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
                 <a
                   href="https://www.instagram.com/dolphin_nettoyage.ch"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-[#c8dff0] hover:text-white transition-colors duration-200 glass-card rounded-full px-4 py-2 text-sm"
+                  className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105"
+                  style={{
+                    background: 'rgba(46,134,171,0.07)',
+                    border: '1px solid rgba(46,134,171,0.15)',
+                    color: '#1E6091',
+                  }}
                 >
-                  <InstagramIcon size={16} />
+                  <InstagramIcon size={15} />
                   @dolphin_nettoyage.ch
                 </a>
                 <a
                   href="https://www.facebook.com/dolphin.nettoyage"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-[#c8dff0] hover:text-white transition-colors duration-200 glass-card rounded-full px-4 py-2 text-sm"
+                  className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105"
+                  style={{
+                    background: 'rgba(46,134,171,0.07)',
+                    border: '1px solid rgba(46,134,171,0.15)',
+                    color: '#1E6091',
+                  }}
                 >
-                  <FacebookIcon size={16} />
+                  <FacebookIcon size={15} />
                   dolphin nettoyage
                 </a>
               </div>
