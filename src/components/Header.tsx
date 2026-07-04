@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import { useSiteData } from '../context/SiteDataContext'
 
-const navLinks = [
-  { label: 'Services',         href: '#services' },
-  { label: 'Pourquoi nous',    href: '#pourquoi' },
-  { label: 'Avis',             href: '#avis'     },
-  { label: "Zone d'intervention", href: '#zone'  },
-  { label: 'Contact',          href: '#contact'  },
+const baseNavLinks = [
+  { label: 'Services',            href: '#services'     },
+  { label: 'Pourquoi nous',       href: '#pourquoi'     },
+  { label: 'Réalisations',        href: '#realisations', conditional: true },
+  { label: 'Avis',                href: '#avis'         },
+  { label: "Zone d'intervention", href: '#zone'         },
+  { label: 'Contact',             href: '#contact'      },
 ]
 
 export default function Header() {
+  const { realisations } = useSiteData()
+  const navLinks = baseNavLinks.filter(l => !l.conditional || realisations.length > 0)
   const [scrolled, setScrolled]       = useState(false)
   const [menuOpen, setMenuOpen]       = useState(false)
   const [activeSection, setActive]    = useState('hero')
@@ -22,7 +26,7 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
-    const ids = ['hero', 'services', 'pourquoi', 'avis', 'zone', 'contact']
+    const ids = ['hero', 'services', 'pourquoi', 'avis', 'realisations', 'zone', 'contact']
     const observers: IntersectionObserver[] = []
 
     ids.forEach(id => {

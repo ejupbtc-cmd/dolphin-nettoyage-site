@@ -2,52 +2,51 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Sofa, Car, Building2, Layers } from 'lucide-react'
+import { useSiteData } from '../context/SiteDataContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const services = [
+const servicesMeta = [
   {
+    id: 'textile',
     icon: Sofa,
     title: 'Nettoyage Textile',
     color: '#1E6091',
-    // Modern sofa — upholstery fabric, on-topic
-    image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&auto=format&fit=crop',
     alt: 'Canapé tissu propre après nettoyage professionnel',
     items: ['Moquettes et tapis', 'Canapés et matelas', 'Fauteuils et chaises'],
   },
   {
+    id: 'voiture',
     icon: Car,
     title: 'Voiture',
     color: '#2E86AB',
-    // Car interior detailing
-    image: 'https://images.unsplash.com/photo-1610647752529-41b7b3f68bfd?w=600&q=80&auto=format&fit=crop',
     alt: 'Intérieur de voiture nettoyé et détaillé',
     items: ['Intérieur complet', 'Nettoyage extérieur écologique (sans eau)', 'Siège auto bébé'],
   },
   {
+    id: 'industriel',
     icon: Building2,
     title: 'Nettoyage Industriel',
     color: '#2E86AB',
-    // Professional cleaning, mop/office
-    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80&auto=format&fit=crop',
     alt: 'Nettoyage professionnel de bureaux et espaces industriels',
     items: ['Fin de chantier', 'Bureaux et commerces', 'Cabinets médicaux', 'Airbnb / location saisonnière'],
   },
   {
+    id: 'surfaces',
     icon: Layers,
     title: 'Surfaces spécialisées',
     color: '#1E6091',
-    // Window squeegee cleaning — on-topic
-    image: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600&q=80&auto=format&fit=crop',
     alt: 'Nettoyage de vitres avec raclette professionnelle',
     items: ['Vitres et vérandas', 'Terrasses et balcons', 'Espaces piscine', 'Entretien jardins'],
   },
 ]
 
 export default function Services() {
+  const { serviceImages } = useSiteData()
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef   = useRef<HTMLDivElement>(null)
   const cardsRef   = useRef<HTMLDivElement>(null)
+  const services = servicesMeta.map(s => ({ ...s, image: serviceImages[s.id] || '' }))
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -106,53 +105,57 @@ export default function Services() {
                 style={{ opacity: 0 }}
               >
                 {/* Photo with unified blue duotone overlay */}
-                <div className="relative" style={{ aspectRatio: '4/3', borderRadius: '20px 20px 0 0', overflow: 'hidden' }}>
-                  <img
-                    src={service.image}
-                    alt={service.alt}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  {/* Blue duotone overlay — unifies all photos */}
-                  <div
-                    className="absolute inset-0"
-                    aria-hidden="true"
-                    style={{
-                      background: `linear-gradient(135deg, rgba(30,96,145,0.32) 0%, rgba(46,134,171,0.18) 100%)`,
-                      mixBlendMode: 'multiply',
-                    }}
-                  />
-                  <div
-                    className="absolute inset-0"
-                    aria-hidden="true"
-                    style={{ background: 'linear-gradient(180deg, transparent 55%, rgba(14,30,60,0.25) 100%)' }}
-                  />
-                </div>
+                <div className="relative" style={{ aspectRatio: '4/3', borderRadius: '20px 20px 0 0' }}>
+                  {/* Inner wrapper clips the image without clipping the icon badge */}
+                  <div className="absolute inset-0 overflow-hidden" style={{ borderRadius: '20px 20px 0 0' }}>
+                    <img
+                      src={service.image}
+                      alt={service.alt}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    {/* Blue duotone overlay — unifies all photos */}
+                    <div
+                      className="absolute inset-0"
+                      aria-hidden="true"
+                      style={{
+                        background: `linear-gradient(135deg, rgba(30,96,145,0.32) 0%, rgba(46,134,171,0.18) 100%)`,
+                        mixBlendMode: 'multiply',
+                      }}
+                    />
+                    <div
+                      className="absolute inset-0"
+                      aria-hidden="true"
+                      style={{ background: 'linear-gradient(180deg, transparent 55%, rgba(14,30,60,0.3) 100%)' }}
+                    />
+                  </div>
 
-                {/* Icon badge — 56px circle, centered, straddling the photo's top edge (28px in / 28px out) */}
-                <div
-                  className="absolute flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                  style={{
-                    top: 0, left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '56px', height: '56px',
-                    borderRadius: '9999px',
-                    background: '#FFFFFF',
-                    border: '4px solid #FFFFFF',
-                    boxShadow: '0 8px 24px rgba(11,27,46,0.18)',
-                  }}
-                >
+                  {/* Icon badge — straddling the photo/content boundary (bottom edge of photo) */}
                   <div
-                    className="flex items-center justify-center rounded-full"
-                    style={{ width: '100%', height: '100%', background: 'rgba(46,134,171,0.1)' }}
+                    className="absolute flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                    style={{
+                      bottom: 0, left: '50%',
+                      transform: 'translate(-50%, 50%)',
+                      width: '56px', height: '56px',
+                      borderRadius: '9999px',
+                      background: '#FFFFFF',
+                      border: '4px solid #FFFFFF',
+                      boxShadow: '0 8px 24px rgba(11,27,46,0.18)',
+                      zIndex: 2,
+                    }}
                   >
-                    <Icon size={22} style={{ color: service.color }} aria-hidden="true" />
+                    <div
+                      className="flex items-center justify-center rounded-full"
+                      style={{ width: '100%', height: '100%', background: 'rgba(46,134,171,0.1)' }}
+                    >
+                      <Icon size={22} style={{ color: service.color }} aria-hidden="true" />
+                    </div>
                   </div>
                 </div>
 
-                {/* Content — top gap fixed at 24px (image→title), sides/bottom follow card padding scale */}
-                <div className="px-6 pb-6 lg:px-10 lg:pb-10" style={{ paddingTop: '24px' }}>
+                {/* Content — 36px top so the icon badge (28px below photo edge) doesn't overlap title */}
+                <div className="px-6 pb-6 lg:px-8 lg:pb-8" style={{ paddingTop: '36px' }}>
                   <h3 className="h3-card" style={{ marginBottom: '16px', fontSize: '20px' }}>
                     {service.title}
                   </h3>
