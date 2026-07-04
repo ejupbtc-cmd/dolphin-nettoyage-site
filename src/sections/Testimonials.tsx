@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Star } from 'lucide-react'
+import { useSiteData } from '../context/SiteDataContext'
 
 function useCountUp(target: number | string, inView: boolean, duration = 1.8) {
   const isNumber = typeof target === 'number'
@@ -22,32 +23,6 @@ function useCountUp(target: number | string, inView: boolean, duration = 1.8) {
   return isNumber ? count : target
 }
 
-const testimonials = [
-  {
-    name: 'Sophie M.',
-    location: 'Yverdon-les-Bains',
-    text: 'Service impeccable ! Mon canapé semblait neuf après le nettoyage. Équipe professionnelle, ponctuelle et très soigneuse. Je recommande vivement.',
-    service: 'Nettoyage Textile',
-    avatar: 'SM',
-    color: '#7FDBFF',
-  },
-  {
-    name: 'Marc R.',
-    location: 'Lausanne',
-    text: 'Nettoyage de fin de chantier réalisé rapidement et avec soin. Résultat parfait, prix honnête et devis reçu en moins de 2h. Très sérieux.',
-    service: 'Nettoyage Industriel',
-    avatar: 'MR',
-    color: '#5BC0DE',
-  },
-  {
-    name: 'Isabelle V.',
-    location: 'Morges',
-    text: "J'ai fait nettoyer l'intérieur de ma voiture — résultat bluffant ! Comme sortie du concessionnaire. Le nettoyage sans eau est vraiment efficace.",
-    service: 'Voiture',
-    avatar: 'IV',
-    color: '#2E86AB',
-  },
-]
 
 function StatCounter({
   value, suffix, label, inView, decimals = 0,
@@ -86,6 +61,7 @@ function Stars({ inView }: { inView: boolean }) {
 }
 
 export default function Testimonials() {
+  const { testimonials } = useSiteData()
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 

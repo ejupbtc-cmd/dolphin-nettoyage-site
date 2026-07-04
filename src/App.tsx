@@ -9,6 +9,7 @@ import WhyUs from './sections/WhyUs'
 import OfferBanner from './sections/OfferBanner'
 import ZoneIntervention from './sections/ZoneIntervention'
 import Testimonials from './sections/Testimonials'
+import Realisations from './sections/Realisations'
 import Contact from './sections/Contact'
 import Footer from './sections/Footer'
 
@@ -29,6 +30,7 @@ function App() {
         <WaveDivider from="#0B1B2E" to="#EEF4FA" flip height={88} />
         <ZoneIntervention />
         <WaveDivider from="#EEF4FA" to="#FFFFFF" height={80} />
+        <Realisations />
         <Testimonials />
         <WaveDivider from="#FFFFFF" to="#EEF4FA" flip height={80} />
         <Contact />
