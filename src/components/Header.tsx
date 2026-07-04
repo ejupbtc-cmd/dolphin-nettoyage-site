@@ -120,7 +120,7 @@ export default function Header() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden p-2 rounded-lg transition-colors duration-200"
+            className="md:hidden w-11 h-11 flex items-center justify-center rounded-lg transition-colors duration-200"
             style={{ color: '#0B2545' }}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}

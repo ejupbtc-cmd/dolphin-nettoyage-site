@@ -86,7 +86,7 @@ export default function ZoneIntervention() {
                   <div className="text-lg font-bold" style={{ fontFamily: 'Sora, sans-serif', color: '#0F1C2E' }}>
                     Yverdon-les-Bains
                   </div>
-                  <div className="text-sm" style={{ color: '#2E86AB' }}>& Lausanne</div>
+                  <div className="text-sm" style={{ color: '#1E6091' }}>& Lausanne</div>
                   <div className="text-xs mt-1" style={{ color: '#8BA4BA' }}>Base principale</div>
                 </div>
               </div>

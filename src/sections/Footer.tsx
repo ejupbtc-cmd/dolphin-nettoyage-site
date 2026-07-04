@@ -96,7 +96,7 @@ export default function Footer() {
                 href="https://www.instagram.com/dolphin_nettoyage.ch"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-[#a8cce0] hover:text-white transition-all duration-200 hover:scale-110"
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-[#a8cce0] hover:text-white transition-all duration-200 hover:scale-110"
                 style={{ background: 'rgba(46,134,171,0.15)', border: '1px solid rgba(91,192,222,0.2)' }}
                 aria-label="Instagram"
               >
@@ -106,7 +106,7 @@ export default function Footer() {
                 href="https://www.facebook.com/dolphin.nettoyage"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-[#a8cce0] hover:text-white transition-all duration-200 hover:scale-110"
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-[#a8cce0] hover:text-white transition-all duration-200 hover:scale-110"
                 style={{ background: 'rgba(46,134,171,0.15)', border: '1px solid rgba(91,192,222,0.2)' }}
                 aria-label="Facebook"
               >
@@ -129,7 +129,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#4a6a80]">
+        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#6a90a8]">
           <span>© {new Date().getFullYear()} Dolphin Nettoyage — Tous droits réservés</span>
           <div className="flex gap-4">
             <span>Mentions légales (à compléter)</span>
