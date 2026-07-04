@@ -82,7 +82,7 @@ export default function WhyUs() {
               L'excellence qui fait<br />
               <span className="gradient-text">la différence</span>
             </h2>
-            <p className="body-lg" style={{ marginBottom: '56px' }}>
+            <p className="body-lg" style={{ marginBottom: 'clamp(32px, 5vw, 56px)' }}>
               Nous ne faisons pas que nettoyer — nous nous engageons sur chaque prestation
               pour un résultat impeccable et une expérience client sans friction.
             </p>

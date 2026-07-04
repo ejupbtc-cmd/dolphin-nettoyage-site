@@ -45,11 +45,11 @@ function StatItem({ value, suffix, label, inView, decimals = 0 }: {
     <div
       className="flex flex-col items-center text-center rounded-2xl"
       style={{
-        padding: '28px 32px',
+        padding: 'clamp(16px, 3.5vw, 28px) clamp(16px, 4vw, 32px)',
         background: 'var(--white)',
         border: '1px solid var(--border-soft)',
         boxShadow: '0 2px 16px rgba(11,27,46,0.06)',
-        minWidth: '120px',
+        minWidth: 'min(120px, 28vw)',
       }}
     >
       <div

@@ -84,7 +84,7 @@ export default function Services() {
     >
       <div className="container-page">
         {/* Section header */}
-        <div ref={titleRef} className="text-center mb-16" style={{ opacity: 0, maxWidth: '640px', marginInline: 'auto' }}>
+        <div ref={titleRef} className="text-center mb-10 md:mb-16" style={{ opacity: 0, maxWidth: '640px', marginInline: 'auto' }}>
           <span className="eyebrow mb-6 block">Ce que nous faisons</span>
           <h2 className="h2-section mb-6">
             Nettoyage <span className="gradient-text">haut de gamme</span>
@@ -133,7 +133,7 @@ export default function Services() {
 
                   {/* Icon badge — straddling the photo/content boundary (bottom edge of photo) */}
                   <div
-                    className="absolute flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                    className="absolute flex items-center justify-center"
                     style={{
                       bottom: 0, left: '50%',
                       transform: 'translate(-50%, 50%)',
