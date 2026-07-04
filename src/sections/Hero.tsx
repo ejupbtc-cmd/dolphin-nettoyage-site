@@ -47,8 +47,13 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 overflow-hidden"
-      style={{ background: 'linear-gradient(170deg, #E8F4FC 0%, #F4F9FD 45%, #FFFFFF 100%)' }}
+      className="relative flex flex-col justify-center items-center text-center overflow-hidden"
+      style={{
+        minHeight: '90vh',
+        paddingTop: '112px',
+        paddingBottom: '64px',
+        background: 'linear-gradient(170deg, #E8F4FC 0%, #F4F9FD 45%, #FFFFFF 100%)',
+      }}
     >
       {/* Animated gradient blobs */}
       <div
@@ -92,55 +97,53 @@ export default function Hero() {
         </svg>
       </div>
 
-      {/* Floating -20% badge */}
+      {/* Floating -20% badge — 140x140px at desktop per spec; scaled down and tucked
+          into the top corner on narrow screens so it never overlaps the headline */}
       <motion.div
         initial={{ opacity: 0, scale: 0.6, rotate: -6 }}
-        animate={{ opacity: 1, scale: 1, rotate: -3 }}
+        animate={{ opacity: 1, scale: 1, rotate: -6 }}
         transition={{ delay: 1.1, type: 'spring', stiffness: 240, damping: 18 }}
-        className="badge-float absolute top-28 right-4 sm:right-10 lg:right-20 xl:right-32 z-10"
+        className="badge-float absolute z-10 flex flex-col items-center justify-center text-center
+                   top-[2%] right-[3%] w-[92px] h-[92px]
+                   sm:top-[8%] sm:right-[4%] sm:w-[116px] sm:h-[116px]
+                   lg:top-[15%] lg:right-[5%] lg:w-[140px] lg:h-[140px]"
+        style={{
+          borderRadius: '20px',
+          background: '#FFFFFF',
+          border: '1.5px solid var(--border-soft)',
+          boxShadow: '0 12px 32px rgba(30,96,145,0.2)',
+        }}
         aria-label="Offre : -20% sur le premier nettoyage"
       >
-        <div
-          className="rounded-2xl px-4 py-3 text-center"
-          style={{
-            background: '#FFFFFF',
-            border: '1.5px solid rgba(46,134,171,0.18)',
-            boxShadow: '0 8px 32px rgba(46,134,171,0.18), 0 2px 8px rgba(11,37,69,0.08)',
-          }}
-        >
-          <div className="text-2xl font-black gradient-text" style={{ fontFamily: 'Sora, sans-serif' }}>
-            -20%
-          </div>
-          <div className="text-xs font-medium leading-tight mt-0.5" style={{ color: '#4A6580' }}>
-            sur votre 1er<br />nettoyage
-          </div>
+        <div className="text-xl sm:text-2xl lg:text-3xl font-black gradient-text" style={{ fontFamily: 'Sora, sans-serif' }}>
+          -20%
+        </div>
+        <div className="text-[10px] sm:text-xs font-medium leading-tight mt-1 sm:mt-2" style={{ color: 'var(--text-muted)' }}>
+          sur votre 1er<br />nettoyage
         </div>
       </motion.div>
 
       {/* Main content */}
-      <div className="relative z-10 max-w-4xl mx-auto">
-        {/* Label chip */}
+      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+        {/* Eyebrow badge */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 mb-10"
+          className="inline-flex items-center gap-2 rounded-full mb-6"
           style={{
+            padding: '12px 20px',
             background: 'rgba(46,134,171,0.08)',
             border: '1px solid rgba(46,134,171,0.18)',
           }}
         >
-          <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#5BC0DE' }} />
-          <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: '#1E6091' }}>
+          <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--aqua)' }} />
+          <span className="eyebrow">
             Nettoyage professionnel — Canton de Vaud
           </span>
         </motion.div>
 
-        <h1
-          ref={titleRef}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6"
-          style={{ opacity: 0, color: '#0F1C2E' }}
-        >
+        <h1 ref={titleRef} className="h1-hero mb-6" style={{ opacity: 0 }}>
           Votre expert du{' '}
           <span className="gradient-text">nettoyage</span>
           <br />à domicile
@@ -148,11 +151,11 @@ export default function Hero() {
 
         <p
           ref={subRef}
-          className="text-base sm:text-lg md:text-xl leading-relaxed mb-12 max-w-2xl mx-auto"
-          style={{ opacity: 0, color: '#4A6580' }}
+          className="body-lg mb-8 mx-auto"
+          style={{ opacity: 0, maxWidth: '640px' }}
         >
           Particuliers &amp; professionnels —{' '}
-          <strong style={{ color: '#0F1C2E', fontWeight: 600 }}>devis gratuit sous 24h</strong>,
+          <strong style={{ color: 'var(--navy-deep)', fontWeight: 600 }}>devis gratuit sous 24h</strong>,
           intervention rapide dans tout le Canton de Vaud.
           Un service haut de gamme, des résultats impeccables.
         </p>
@@ -162,13 +165,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.7 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10"
         >
           <a
             href="https://wa.me/41779915344"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-whatsapp flex items-center gap-3 font-bold px-7 py-4 rounded-full text-base w-full sm:w-auto justify-center"
+            className="btn-whatsapp flex items-center gap-3 rounded-full w-full sm:w-auto"
           >
             <WaIcon />
             Obtenir mon devis gratuit
@@ -176,7 +179,7 @@ export default function Hero() {
           <a
             href="#services"
             onClick={e => { e.preventDefault(); document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' }) }}
-            className="btn-outline font-semibold px-7 py-4 rounded-full text-base w-full sm:w-auto text-center"
+            className="btn-outline rounded-full w-full sm:w-auto"
           >
             Découvrir nos services
           </a>
@@ -187,12 +190,12 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.15, duration: 0.8 }}
-          className="flex flex-wrap justify-center gap-8 mt-16"
+          className="flex flex-wrap justify-center gap-8"
         >
           {trustItems.map(item => (
             <div key={item.label} className="flex items-center gap-2">
               <span className="text-base" aria-hidden="true">{item.icon}</span>
-              <span className="text-sm font-medium" style={{ color: '#4A6580' }}>{item.label}</span>
+              <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{item.label}</span>
             </div>
           ))}
         </motion.div>
@@ -201,7 +204,7 @@ export default function Hero() {
       {/* Scroll cue */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        style={{ color: '#5BC0DE' }}
+        style={{ color: 'var(--aqua)' }}
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         aria-hidden="true"

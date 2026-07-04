@@ -16,7 +16,7 @@ export default function Header() {
   const [activeSection, setActive]    = useState('hero')
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
+    const onScroll = () => setScrolled(window.scrollY > 80)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -49,43 +49,47 @@ export default function Header() {
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
       style={{
-        background: scrolled
-          ? 'rgba(255, 255, 255, 0.92)'
-          : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(46, 134, 171, 0.1)' : 'none',
-        boxShadow: scrolled ? '0 2px 24px rgba(46, 134, 171, 0.08)' : 'none',
+        background: scrolled ? 'rgba(255, 255, 255, 0.8)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
+        boxShadow: scrolled ? '0 1px 0 var(--border-soft)' : 'none',
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <div className="container-page">
+        <div className="flex items-center justify-between h-[72px] lg:h-[88px]">
           {/* Logo */}
           <a
             href="#"
             onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-            className="flex items-center gap-2.5 group"
+            className="flex items-center group"
+            style={{ gap: '12px' }}
             aria-label="Dolphin Nettoyage — Retour en haut"
           >
-            <span className="text-3xl" aria-hidden="true">🐬</span>
+            <span
+              className="flex items-center justify-center flex-shrink-0 rounded-full"
+              style={{ width: '48px', height: '48px', background: 'rgba(46,134,171,0.08)', fontSize: '26px' }}
+              aria-hidden="true"
+            >
+              🐬
+            </span>
             <div>
               <div
                 className="font-black leading-tight tracking-tight"
-                style={{ fontFamily: 'Sora, sans-serif', fontSize: '1.05rem', color: '#0B2545' }}
+                style={{ fontFamily: 'Sora, sans-serif', fontSize: '1.05rem', color: 'var(--navy-deep)' }}
               >
                 DOLPHIN
               </div>
               <div
                 className="font-semibold tracking-widest"
-                style={{ fontSize: '0.58rem', color: '#2E86AB' }}
+                style={{ fontSize: '0.58rem', color: 'var(--blue-light)' }}
               >
                 NETTOYAGE
               </div>
             </div>
           </a>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8" aria-label="Navigation principale">
+          {/* Desktop nav — starts at lg: the French labels don't fit md's 768-1023px range */}
+          <nav className="hidden lg:flex items-center" style={{ gap: '40px' }} aria-label="Navigation principale">
             {navLinks.map(link => {
               const sectionId = link.href.slice(1)
               const isActive  = activeSection === sectionId
@@ -94,25 +98,26 @@ export default function Header() {
                   key={link.href}
                   onClick={() => handleNav(link.href)}
                   className="relative text-sm font-medium transition-colors duration-200 cursor-pointer bg-transparent border-none group"
-                  style={{ color: isActive ? '#1E6091' : '#4A6580' }}
+                  style={{ color: isActive ? 'var(--blue)' : 'var(--text-muted)' }}
                 >
                   {link.label}
                   <span
-                    className="absolute -bottom-0.5 left-0 h-px bg-[#2E86AB] transition-all duration-300"
-                    style={{ width: isActive ? '100%' : '0%' }}
+                    className="absolute -bottom-1 left-0 h-px"
+                    style={{ background: 'var(--blue-light)', width: isActive ? '100%' : '0%', transition: 'width 300ms' }}
                   />
-                  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-[#5BC0DE] transition-all duration-300 group-hover:w-full opacity-60" />
+                  <span className="absolute -bottom-1 left-0 w-0 h-px group-hover:w-full opacity-60" style={{ background: 'var(--aqua)', transition: 'width 300ms' }} />
                 </button>
               )
             })}
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex">
+          <div className="hidden lg:flex">
             <a
               href="#contact"
               onClick={e => { e.preventDefault(); handleNav('#contact') }}
-              className="btn-primary text-white text-sm font-semibold px-5 py-2.5 rounded-full"
+              className="btn-primary text-white text-sm font-semibold rounded-full"
+              style={{ padding: '14px 28px', minHeight: 'auto' }}
             >
               Devis gratuit
             </a>
@@ -120,8 +125,8 @@ export default function Header() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden w-11 h-11 flex items-center justify-center rounded-lg transition-colors duration-200"
-            style={{ color: '#0B2545' }}
+            className="lg:hidden w-11 h-11 flex items-center justify-center rounded-lg transition-colors duration-200"
+            style={{ color: 'var(--navy-deep)' }}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={menuOpen}
@@ -139,23 +144,23 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18 }}
-            className="md:hidden"
+            className="lg:hidden"
             style={{
               background: 'rgba(255, 255, 255, 0.97)',
               backdropFilter: 'blur(20px)',
-              borderBottom: '1px solid rgba(46, 134, 171, 0.1)',
+              borderBottom: '1px solid var(--border-soft)',
               boxShadow: '0 8px 32px rgba(46, 134, 171, 0.1)',
             }}
           >
-            <nav className="px-4 pt-2 pb-5 space-y-0.5" aria-label="Navigation mobile">
+            <nav className="container-page pt-2 pb-6 space-y-1" aria-label="Navigation mobile">
               {navLinks.map(link => (
                 <button
                   key={link.href}
                   onClick={() => handleNav(link.href)}
-                  className="block w-full text-left px-3 py-3.5 text-base font-medium border-b cursor-pointer bg-transparent transition-colors duration-150"
+                  className="block w-full text-left px-3 py-4 text-base font-medium border-b cursor-pointer bg-transparent transition-colors duration-150"
                   style={{
-                    color: '#0F1C2E',
-                    borderColor: 'rgba(46,134,171,0.08)',
+                    color: 'var(--navy-deep)',
+                    borderColor: 'var(--border-soft)',
                   }}
                 >
                   {link.label}
@@ -164,7 +169,7 @@ export default function Header() {
               <a
                 href="#contact"
                 onClick={e => { e.preventDefault(); handleNav('#contact') }}
-                className="btn-primary block text-center text-white font-semibold px-5 py-3 rounded-full mt-4"
+                className="btn-primary block text-center text-white font-semibold rounded-full mt-4"
               >
                 Devis gratuit
               </a>

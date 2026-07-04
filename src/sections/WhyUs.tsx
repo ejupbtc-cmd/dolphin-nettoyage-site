@@ -61,8 +61,8 @@ export default function WhyUs() {
     <section
       id="pourquoi"
       ref={sectionRef}
-      className="relative py-32 px-6 overflow-hidden"
-      style={{ background: '#FFFFFF' }}
+      className="section-pad relative overflow-hidden"
+      style={{ background: 'var(--white)' }}
     >
       {/* Subtle background accent */}
       <div
@@ -73,43 +73,41 @@ export default function WhyUs() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+      <div className="container-page relative z-10">
+        <div className="grid lg:grid-cols-2 items-center" style={{ gap: '80px' }}>
           {/* Text side */}
           <div>
-            <span className="section-label">Pourquoi nous choisir</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-6" style={{ color: '#0F1C2E' }}>
+            <span className="eyebrow mb-6 block">Pourquoi nous choisir</span>
+            <h2 className="h2-section mb-6">
               L'excellence qui fait<br />
               <span className="gradient-text">la différence</span>
             </h2>
-            <p className="text-lg mb-12 leading-relaxed" style={{ color: '#4A6580' }}>
+            <p className="body-lg" style={{ marginBottom: '64px' }}>
               Nous ne faisons pas que nettoyer — nous nous engageons sur chaque prestation
               pour un résultat impeccable et une expérience client sans friction.
             </p>
 
-            <div className="space-y-8">
+            <div className="flex flex-col" style={{ gap: '32px' }}>
               {differentiators.map(d => {
                 const Icon = d.icon
                 return (
-                  <div key={d.title} className="why-item flex gap-4 group" style={{ opacity: 0 }}>
+                  <div key={d.title} className="why-item flex group" style={{ opacity: 0, gap: '20px' }}>
                     <div
-                      className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-0.5"
+                      className="flex-shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-0.5"
                       style={{
+                        width: '48px', height: '48px',
                         background: `${d.color}12`,
                         border: `1.5px solid ${d.color}28`,
                         boxShadow: `0 2px 12px ${d.color}18`,
                       }}
                     >
-                      <Icon size={20} style={{ color: d.color }} aria-hidden="true" />
+                      <Icon size={22} style={{ color: d.color }} aria-hidden="true" />
                     </div>
                     <div>
-                      <h3
-                        className="text-base font-bold mb-1"
-                        style={{ fontFamily: 'Sora, sans-serif', color: '#0F1C2E' }}
-                      >
+                      <h3 className="h3-card" style={{ fontSize: '18px', marginBottom: '4px' }}>
                         {d.title}
                       </h3>
-                      <p className="text-sm leading-relaxed" style={{ color: '#4A6580' }}>
+                      <p className="body-md" style={{ fontSize: '15px' }}>
                         {d.desc}
                       </p>
                     </div>
@@ -124,9 +122,10 @@ export default function WhyUs() {
             <div className="relative">
               {/* Main photo card */}
               <div
-                className="rounded-3xl overflow-hidden"
+                className="relative overflow-hidden"
                 style={{
                   aspectRatio: '4/5',
+                  borderRadius: '20px',
                   boxShadow: '0 24px 64px rgba(46,134,171,0.18), 0 8px 24px rgba(11,37,69,0.1)',
                 }}
               >
@@ -137,7 +136,6 @@ export default function WhyUs() {
                   loading="lazy"
                   decoding="async"
                 />
-                {/* Consistent blue duotone overlay */}
                 <div
                   className="absolute inset-0"
                   aria-hidden="true"
@@ -148,21 +146,18 @@ export default function WhyUs() {
                 />
                 {/* 100% stat card — fully contained inside image */}
                 <div
-                  className="absolute bottom-6 left-6 right-6 rounded-2xl p-4"
+                  className="absolute bottom-6 left-6 right-6 rounded-2xl p-6"
                   style={{
                     background: 'rgba(255,255,255,0.92)',
                     backdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(46,134,171,0.15)',
+                    border: '1px solid var(--border-soft)',
                     boxShadow: '0 4px 20px rgba(46,134,171,0.12)',
                   }}
                 >
-                  <div
-                    className="text-2xl font-black gradient-text"
-                    style={{ fontFamily: 'Sora, sans-serif' }}
-                  >
+                  <div className="text-2xl font-black gradient-text" style={{ fontFamily: 'Sora, sans-serif' }}>
                     100%
                   </div>
-                  <div className="text-sm font-medium" style={{ color: '#1E6091' }}>
+                  <div className="text-sm font-medium" style={{ color: 'var(--blue)' }}>
                     Clients satisfaits
                   </div>
                 </div>
@@ -173,18 +168,15 @@ export default function WhyUs() {
                 className="absolute -top-4 -right-4 rounded-2xl px-5 py-4 text-center"
                 style={{
                   background: '#FFFFFF',
-                  border: '1.5px solid rgba(46,134,171,0.15)',
+                  border: '1.5px solid var(--border-soft)',
                   boxShadow: '0 8px 32px rgba(46,134,171,0.16)',
                   minWidth: '96px',
                 }}
               >
-                <div
-                  className="text-2xl font-black gradient-text"
-                  style={{ fontFamily: 'Sora, sans-serif' }}
-                >
+                <div className="text-2xl font-black gradient-text" style={{ fontFamily: 'Sora, sans-serif' }}>
                   24h
                 </div>
-                <div className="text-xs font-medium mt-0.5" style={{ color: '#4A6580' }}>
+                <div className="text-xs font-medium mt-0.5" style={{ color: 'var(--text-muted)' }}>
                   Délai de réponse
                 </div>
               </div>

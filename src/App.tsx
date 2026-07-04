@@ -20,19 +20,19 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <WaveDivider from="#F4F9FD" to="#EEF4FA" height={80} />
+        <WaveDivider from="#FFFFFF" to="#EEF4FA" height={80} />
         <Services />
         <WaveDivider from="#EEF4FA" to="#FFFFFF" flip height={80} />
         <WhyUs />
-        <WaveDivider from="#FFFFFF" to="#071525" height={88} />
+        <WaveDivider from="#FFFFFF" to="#0B1B2E" height={88} />
         <OfferBanner />
-        <WaveDivider from="#071525" to="#EEF4FA" flip height={88} />
+        <WaveDivider from="#0B1B2E" to="#EEF4FA" flip height={88} />
         <ZoneIntervention />
         <WaveDivider from="#EEF4FA" to="#FFFFFF" height={80} />
         <Testimonials />
         <WaveDivider from="#FFFFFF" to="#EEF4FA" flip height={80} />
         <Contact />
-        <WaveDivider from="#EEF4FA" to="#050F1E" height={88} />
+        <WaveDivider from="#EEF4FA" to="#FFFFFF" height={88} />
         <Footer />
       </main>
       <FloatingWhatsApp />

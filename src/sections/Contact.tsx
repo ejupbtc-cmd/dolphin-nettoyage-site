@@ -55,8 +55,8 @@ export default function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="relative py-32 px-6 overflow-hidden"
-      style={{ background: '#EEF4FA' }}
+      className="section-pad relative overflow-hidden"
+      style={{ background: 'var(--bg-ice)' }}
     >
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div style={{
@@ -67,7 +67,7 @@ export default function Contact() {
         }} />
       </div>
 
-      <div className="max-w-3xl mx-auto relative z-10">
+      <div className="container-page relative z-10" style={{ maxWidth: '768px' }}>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -75,12 +75,8 @@ export default function Contact() {
         >
           {/* Glass card */}
           <div
-            className="rounded-3xl p-10 sm:p-16 text-center relative overflow-hidden"
-            style={{
-              background: '#FFFFFF',
-              border: '1px solid rgba(46,134,171,0.12)',
-              boxShadow: '0 16px 64px rgba(46,134,171,0.1), 0 4px 16px rgba(11,37,69,0.06)',
-            }}
+            className="card relative overflow-hidden text-center p-10 sm:p-16"
+            style={{ background: 'var(--white)' }}
           >
             {/* Top accent line */}
             <div
@@ -89,56 +85,58 @@ export default function Contact() {
               style={{ background: 'linear-gradient(90deg, transparent, rgba(46,134,171,0.5), transparent)' }}
             />
 
-            <span className="section-label">Contactez-nous</span>
+            <span className="eyebrow mb-6 block">Contactez-nous</span>
 
-            <h2 className="text-3xl sm:text-4xl font-black mb-3" style={{ color: '#0F1C2E' }}>
+            <h2 className="h2-section" style={{ marginBottom: '16px', fontSize: 'clamp(28px, 4vw, 40px)' }}>
               Votre devis gratuit en
               <br />
               <span className="gradient-text">moins de 24h</span>
             </h2>
 
-            <p className="text-base mb-10 max-w-md mx-auto" style={{ color: '#4A6580' }}>
+            <p className="body-md mx-auto" style={{ marginBottom: '40px', maxWidth: '440px' }}>
               Décrivez-nous votre besoin via WhatsApp, par téléphone ou par email.
               Nous vous répondons rapidement avec une estimation claire et sans engagement.
             </p>
 
             {/* Contact buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <div className="flex flex-col sm:flex-row justify-center mb-12 flex-wrap" style={{ gap: '16px' }}>
               {contactItems.map(item => (
                 <a
                   key={item.label}
                   href={item.href}
                   target={item.href.startsWith('http') ? '_blank' : undefined}
                   rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className={`${item.className} flex items-center justify-center gap-3 text-white font-semibold px-6 py-3.5 rounded-full text-sm`}
+                  className={`${item.className} justify-center gap-3 text-white rounded-full text-sm`}
+                  style={{ padding: '16px 28px', minHeight: '56px' }}
                 >
                   {item.icon}
-                  <span>
+                  <span className="min-w-0">
                     <span className="block font-bold">{item.label}</span>
-                    <span className="block text-xs opacity-80 font-normal">{item.sub}</span>
+                    <span className="block text-xs opacity-80 font-normal break-all">{item.sub}</span>
                   </span>
                 </a>
               ))}
             </div>
 
             {/* Social links */}
-            <div className="pt-8" style={{ borderTop: '1px solid rgba(46,134,171,0.1)' }}>
+            <div className="pt-8" style={{ borderTop: '1px solid var(--border-soft)' }}>
               <p
                 className="text-xs mb-4 uppercase tracking-wider font-semibold"
-                style={{ color: '#8BA4BA' }}
+                style={{ color: 'var(--text-muted)' }}
               >
                 Retrouvez-nous sur
               </p>
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-wrap justify-center" style={{ gap: '12px' }}>
                 <a
                   href="https://www.instagram.com/dolphin_nettoyage.ch"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105"
+                  className="flex items-center gap-2 rounded-full text-sm font-medium transition-all duration-200 hover:scale-105"
                   style={{
+                    padding: '10px 20px',
                     background: 'rgba(46,134,171,0.07)',
                     border: '1px solid rgba(46,134,171,0.15)',
-                    color: '#1E6091',
+                    color: 'var(--blue)',
                   }}
                 >
                   <InstagramIcon size={15} />
@@ -148,11 +146,12 @@ export default function Contact() {
                   href="https://www.facebook.com/dolphin.nettoyage"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105"
+                  className="flex items-center gap-2 rounded-full text-sm font-medium transition-all duration-200 hover:scale-105"
                   style={{
+                    padding: '10px 20px',
                     background: 'rgba(46,134,171,0.07)',
                     border: '1px solid rgba(46,134,171,0.15)',
-                    color: '#1E6091',
+                    color: 'var(--blue)',
                   }}
                 >
                   <FacebookIcon size={15} />
