@@ -104,8 +104,8 @@ export default function Hero() {
         animate={{ opacity: 1, scale: 1, rotate: -6 }}
         transition={{ delay: 1.1, type: 'spring', stiffness: 240, damping: 18 }}
         className="badge-float absolute z-10 flex flex-col items-center justify-center text-center
-                   top-[2%] right-[3%] w-[92px] h-[92px]
-                   sm:top-[8%] sm:right-[4%] sm:w-[116px] sm:h-[116px]
+                   top-[88px] right-[12px] w-[88px] h-[88px]
+                   sm:top-[100px] sm:right-[24px] sm:w-[116px] sm:h-[116px]
                    lg:top-[15%] lg:right-[5%] lg:w-[140px] lg:h-[140px]"
         style={{
           borderRadius: '20px',
