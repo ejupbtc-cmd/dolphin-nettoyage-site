@@ -31,34 +31,42 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative px-4 pt-16 pb-8 overflow-hidden"
-      style={{ background: '#050f1e', borderTop: '1px solid rgba(46,134,171,0.12)' }}
+      className="relative overflow-hidden pt-24 pb-10"
+      style={{ background: 'var(--white)', borderTop: '1px solid var(--border-soft)' }}
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <div className="container-page">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-3xl">🐬</span>
+            <div className="flex items-center gap-3 mb-4">
+              <span
+                className="flex items-center justify-center flex-shrink-0 rounded-full"
+                style={{ width: '48px', height: '48px', background: 'rgba(46,134,171,0.08)', fontSize: '26px' }}
+              >
+                🐬
+              </span>
               <div>
-                <div className="font-black text-white leading-tight tracking-tight" style={{ fontFamily: 'Sora, sans-serif', fontSize: '1.1rem' }}>DOLPHIN</div>
-                <div className="text-[#5BC0DE] font-semibold tracking-widest" style={{ fontSize: '0.6rem' }}>NETTOYAGE</div>
+                <div className="font-black leading-tight tracking-tight" style={{ fontFamily: 'Sora, sans-serif', fontSize: '1.1rem', color: 'var(--navy-deep)' }}>DOLPHIN</div>
+                <div className="font-semibold tracking-widest" style={{ fontSize: '0.6rem', color: 'var(--blue-light)' }}>NETTOYAGE</div>
               </div>
             </div>
-            <p className="text-sm text-[#6a90a8] leading-relaxed">
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
               Votre expert du nettoyage à domicile. Service haut de gamme pour particuliers et professionnels.
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Navigation</h4>
-            <ul className="space-y-2.5">
+            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider" style={{ color: 'var(--navy-deep)' }}>Navigation</h4>
+            <ul className="space-y-3">
               {navLinks.map(link => (
                 <li key={link.href}>
                   <button
                     onClick={() => scrollTo(link.href)}
-                    className="text-sm text-[#6a90a8] hover:text-[#7FDBFF] transition-colors duration-200 bg-transparent border-none cursor-pointer text-left"
+                    className="text-sm transition-colors duration-200 bg-transparent border-none cursor-pointer text-left"
+                    style={{ color: 'var(--text-muted)' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = 'var(--blue)')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
                   >
                     {link.label}
                   </button>
@@ -69,20 +77,20 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Contact</h4>
+            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider" style={{ color: 'var(--navy-deep)' }}>Contact</h4>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2.5 text-sm text-[#6a90a8]">
-                <Phone size={14} className="text-[#5BC0DE] mt-0.5 flex-shrink-0" />
-                <a href="tel:+41779915344" className="hover:text-white transition-colors">+41 77 991 53 44</a>
+              <li className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <Phone size={14} style={{ color: 'var(--blue-light)' }} className="mt-0.5 flex-shrink-0" />
+                <a href="tel:+41779915344" className="transition-colors hover:opacity-70">+41 77 991 53 44</a>
               </li>
-              <li className="flex items-start gap-2.5 text-sm text-[#6a90a8]">
-                <Mail size={14} className="text-[#5BC0DE] mt-0.5 flex-shrink-0" />
-                <a href="mailto:dolphin.nettoyage1400@gmail.com" className="hover:text-white transition-colors break-all">
+              <li className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <Mail size={14} style={{ color: 'var(--blue-light)' }} className="mt-0.5 flex-shrink-0" />
+                <a href="mailto:dolphin.nettoyage1400@gmail.com" className="transition-colors hover:opacity-70 break-all">
                   dolphin.nettoyage1400@gmail.com
                 </a>
               </li>
-              <li className="flex items-start gap-2.5 text-sm text-[#6a90a8]">
-                <MapPin size={14} className="text-[#5BC0DE] mt-0.5 flex-shrink-0" />
+              <li className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <MapPin size={14} style={{ color: 'var(--blue-light)' }} className="mt-0.5 flex-shrink-0" />
                 <span>Yverdon-les-Bains, Canton de Vaud</span>
               </li>
             </ul>
@@ -90,14 +98,14 @@ export default function Footer() {
 
           {/* Social & CTA */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Réseaux sociaux</h4>
+            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider" style={{ color: 'var(--navy-deep)' }}>Réseaux sociaux</h4>
             <div className="flex gap-3 mb-6">
               <a
                 href="https://www.instagram.com/dolphin_nettoyage.ch"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-xl flex items-center justify-center text-[#a8cce0] hover:text-white transition-all duration-200 hover:scale-110"
-                style={{ background: 'rgba(46,134,171,0.15)', border: '1px solid rgba(91,192,222,0.2)' }}
+                className="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
+                style={{ background: 'rgba(46,134,171,0.08)', border: '1px solid var(--border-soft)', color: 'var(--blue)' }}
                 aria-label="Instagram"
               >
                 <InstagramIcon size={18} />
@@ -106,8 +114,8 @@ export default function Footer() {
                 href="https://www.facebook.com/dolphin.nettoyage"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-xl flex items-center justify-center text-[#a8cce0] hover:text-white transition-all duration-200 hover:scale-110"
-                style={{ background: 'rgba(46,134,171,0.15)', border: '1px solid rgba(91,192,222,0.2)' }}
+                className="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
+                style={{ background: 'rgba(46,134,171,0.08)', border: '1px solid var(--border-soft)', color: 'var(--blue)' }}
                 aria-label="Facebook"
               >
                 <FacebookIcon size={18} />
@@ -117,7 +125,8 @@ export default function Footer() {
               href="https://wa.me/41779915344"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp inline-flex items-center gap-2 text-white text-sm font-semibold px-5 py-2.5 rounded-full"
+              className="btn-whatsapp inline-flex items-center gap-2 text-sm rounded-full"
+              style={{ padding: '12px 24px', minHeight: 'auto' }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
@@ -129,7 +138,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#6a90a8]">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs pt-6" style={{ borderTop: '1px solid var(--border-soft)', color: 'var(--text-muted)' }}>
           <span>© {new Date().getFullYear()} Dolphin Nettoyage — Tous droits réservés</span>
           <div className="flex gap-4">
             <span>Mentions légales (à compléter)</span>

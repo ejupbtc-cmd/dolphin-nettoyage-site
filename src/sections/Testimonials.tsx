@@ -63,7 +63,7 @@ function StatCounter({
       >
         {display}{suffix}
       </div>
-      <div className="text-sm mt-1" style={{ color: '#8BA4BA' }}>{label}</div>
+      <div className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{label}</div>
     </div>
   )
 }
@@ -93,23 +93,23 @@ export default function Testimonials() {
     <section
       id="avis"
       ref={ref}
-      className="relative py-32 px-6 overflow-hidden"
-      style={{ background: '#FFFFFF' }}
+      className="section-pad relative overflow-hidden"
+      style={{ background: 'var(--white)' }}
     >
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="container-page relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
+          style={{ maxWidth: '640px', marginInline: 'auto' }}
         >
-          <span className="section-label">Avis clients</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4" style={{ color: '#0F1C2E' }}>
+          <span className="eyebrow mb-6 block">Avis clients</span>
+          <h2 className="h2-section mb-6">
             Ils nous font <span className="gradient-text">confiance</span>
           </h2>
-          <p className="text-lg max-w-xl mx-auto" style={{ color: '#4A6580' }}>
+          <p className="body-lg">
             La satisfaction de nos clients est notre meilleure carte de visite.
-            {/* Placeholder testimonials — to be replaced with real reviews */}
           </p>
         </motion.div>
 
@@ -120,7 +120,8 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 * i + 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="card rounded-2xl p-8 flex flex-col gap-5 group hover:scale-[1.02] transition-all duration-300"
+              className="card p-8 flex flex-col group hover:scale-[1.02] transition-all duration-300"
+              style={{ gap: '24px' }}
             >
               <div className="flex items-center justify-between">
                 <Stars inView={inView} />
@@ -129,34 +130,34 @@ export default function Testimonials() {
                   style={{
                     background: 'rgba(46,134,171,0.08)',
                     border: '1px solid rgba(46,134,171,0.18)',
-                    color: '#1E6091',
+                    color: 'var(--blue)',
                   }}
                 >
                   {t.service}
                 </span>
               </div>
 
-              <p className="text-sm leading-relaxed flex-1" style={{ color: '#4A6580' }}>
+              <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--text-muted)' }}>
                 "{t.text}"
               </p>
 
               <div
                 className="flex items-center gap-3 pt-2 border-t"
-                style={{ borderColor: 'rgba(46,134,171,0.1)' }}
+                style={{ borderColor: 'var(--border-soft)' }}
               >
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
                   style={{
                     background: `rgba(46,134,171,0.1)`,
                     border: `1.5px solid rgba(46,134,171,0.2)`,
-                    color: '#1E6091',
+                    color: 'var(--blue)',
                   }}
                 >
                   {t.avatar}
                 </div>
                 <div>
-                  <div className="text-sm font-semibold" style={{ color: '#0F1C2E' }}>{t.name}</div>
-                  <div className="text-xs" style={{ color: '#8BA4BA' }}>{t.location}</div>
+                  <div className="text-sm font-semibold" style={{ color: 'var(--navy-deep)' }}>{t.name}</div>
+                  <div className="text-xs" style={{ color: 'var(--text-muted)' }}>{t.location}</div>
                 </div>
               </div>
             </motion.div>
@@ -168,7 +169,7 @@ export default function Testimonials() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.6, duration: 0.7 }}
-          className="flex flex-wrap justify-center gap-12 mt-14"
+          className="flex flex-wrap justify-center gap-12 mt-16"
         >
           <StatCounter value={5.0} suffix="" label="Note moyenne" inView={inView} decimals={1} />
           <StatCounter value={100} suffix="+" label="Clients satisfaits" inView={inView} />

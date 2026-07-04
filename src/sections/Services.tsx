@@ -80,33 +80,33 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="relative py-32 px-6"
-      style={{ background: '#EEF4FA' }}
+      className="section-pad"
+      style={{ background: 'var(--bg-ice)' }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="container-page">
         {/* Section header */}
-        <div ref={titleRef} className="text-center mb-20" style={{ opacity: 0 }}>
-          <span className="section-label">Ce que nous faisons</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4" style={{ color: '#0F1C2E' }}>
+        <div ref={titleRef} className="text-center mb-16" style={{ opacity: 0, maxWidth: '640px', marginInline: 'auto' }}>
+          <span className="eyebrow mb-6 block">Ce que nous faisons</span>
+          <h2 className="h2-section mb-6">
             Nettoyage <span className="gradient-text">haut de gamme</span>
           </h2>
-          <p className="text-lg max-w-xl mx-auto" style={{ color: '#4A6580' }}>
+          <p className="body-lg">
             Des solutions adaptées à chaque besoin — particulier ou professionnel.
           </p>
         </div>
 
         {/* Cards grid */}
-        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {services.map(service => {
             const Icon = service.icon
             return (
               <div
                 key={service.title}
-                className="service-card group card rounded-2xl overflow-hidden cursor-default"
+                className="service-card group card cursor-default relative"
                 style={{ opacity: 0 }}
               >
                 {/* Photo with unified blue duotone overlay */}
-                <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                <div className="relative" style={{ aspectRatio: '4/3', borderRadius: '20px 20px 0 0', overflow: 'hidden' }}>
                   <img
                     src={service.image}
                     alt={service.alt}
@@ -123,7 +123,6 @@ export default function Services() {
                       mixBlendMode: 'multiply',
                     }}
                   />
-                  {/* Bottom fade for text legibility if needed */}
                   <div
                     className="absolute inset-0"
                     aria-hidden="true"
@@ -131,51 +130,47 @@ export default function Services() {
                   />
                 </div>
 
-                {/* Icon badge — cleanly below image, above title */}
-                <div className="px-6 pt-6 pb-0 flex items-center gap-3.5">
+                {/* Icon badge — 56px circle, centered, straddling the photo's top edge (28px in / 28px out) */}
+                <div
+                  className="absolute flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                  style={{
+                    top: 0, left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '56px', height: '56px',
+                    borderRadius: '9999px',
+                    background: '#FFFFFF',
+                    border: '4px solid #FFFFFF',
+                    boxShadow: '0 8px 24px rgba(11,27,46,0.18)',
+                  }}
+                >
                   <div
-                    className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-0.5"
-                    style={{
-                      background: `rgba(46,134,171,0.1)`,
-                      border: `1.5px solid rgba(46,134,171,0.2)`,
-                      boxShadow: '0 2px 12px rgba(46,134,171,0.15)',
-                    }}
+                    className="flex items-center justify-center rounded-full"
+                    style={{ width: '100%', height: '100%', background: 'rgba(46,134,171,0.1)' }}
                   >
-                    <Icon size={20} style={{ color: service.color }} aria-hidden="true" />
+                    <Icon size={22} style={{ color: service.color }} aria-hidden="true" />
                   </div>
-                  <h3
-                    className="text-base font-bold"
-                    style={{ fontFamily: 'Sora, sans-serif', color: '#0F1C2E' }}
-                  >
-                    {service.title}
-                  </h3>
                 </div>
 
-                {/* Content */}
-                <div className="px-6 pt-4 pb-6">
-                  <ul className="space-y-3" role="list">
+                {/* Content — top gap fixed at 24px (image→title), sides/bottom follow card padding scale */}
+                <div className="px-6 pb-6 lg:px-10 lg:pb-10" style={{ paddingTop: '24px' }}>
+                  <h3 className="h3-card" style={{ marginBottom: '16px', fontSize: '20px' }}>
+                    {service.title}
+                  </h3>
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} role="list">
                     {service.items.map(item => (
-                      <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed" style={{ color: '#4A6580' }}>
+                      <li key={item} className="flex items-start text-sm leading-relaxed" style={{ color: 'var(--text-muted)', gap: '12px' }}>
                         <span
-                          className="mt-[3px] flex-shrink-0 w-1.5 h-1.5 rounded-full"
-                          style={{ background: service.color }}
+                          className="flex-shrink-0 rounded-full flex items-center justify-center"
+                          style={{ width: '20px', height: '20px', marginTop: '1px' }}
                           aria-hidden="true"
-                        />
+                        >
+                          <span className="rounded-full" style={{ width: '6px', height: '6px', background: service.color, display: 'block' }} />
+                        </span>
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
-
-                {/* Bottom accent */}
-                <div
-                  className="h-[3px] mx-0 rounded-b-2xl"
-                  style={{
-                    background: `linear-gradient(90deg, ${service.color}80, transparent)`,
-                    transition: 'opacity 0.3s',
-                    opacity: 0.6,
-                  }}
-                />
               </div>
             )
           })}

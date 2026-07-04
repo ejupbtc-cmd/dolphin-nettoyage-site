@@ -17,8 +17,8 @@ export default function OfferBanner() {
   return (
     <section
       ref={ref}
-      className="relative py-32 px-6 overflow-hidden"
-      style={{ background: '#071525' }}
+      className="relative overflow-hidden py-20 md:py-24 lg:py-40"
+      style={{ background: 'var(--navy-deep)' }}
       aria-labelledby="offer-heading"
     >
       <div
@@ -29,16 +29,17 @@ export default function OfferBanner() {
         }}
       />
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="container-page relative z-10" style={{ maxWidth: '800px' }}>
         <motion.div
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-3xl p-10 sm:p-16 text-center relative overflow-hidden offer-glow shine-sweep"
+          className="relative overflow-hidden offer-glow shine-sweep text-center p-10 lg:p-20"
           style={{
-            background: 'rgba(14,40,80,0.55)',
+            borderRadius: '24px',
+            background: 'var(--glass-dark-bg)',
             backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(91,192,222,0.2)',
+            border: '1px solid var(--glass-dark-border)',
           }}
         >
           <div
@@ -53,17 +54,17 @@ export default function OfferBanner() {
             transition={{ delay: 0.25, duration: 0.6, type: 'spring' }}
           >
             <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-6"
-              style={{ background: 'rgba(91,192,222,0.1)', border: '1px solid rgba(91,192,222,0.2)' }}
+              className="inline-flex items-center gap-2 rounded-full mb-6"
+              style={{ padding: '10px 20px', background: 'rgba(91,192,222,0.1)', border: '1px solid rgba(91,192,222,0.2)' }}
             >
               <span aria-hidden="true">🎉</span>
-              <span className="text-xs font-bold tracking-widest uppercase" style={{ color: '#7FDBFF' }}>
+              <span className="eyebrow" style={{ color: 'var(--turquoise)' }}>
                 Offre spéciale
               </span>
             </div>
           </motion.div>
 
-          <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center" style={{ gap: '24px' }}>
             <div>
               <span
                 id="offer-heading"
@@ -72,12 +73,12 @@ export default function OfferBanner() {
               >
                 -20%
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mt-3">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white" style={{ marginTop: '16px' }}>
                 sur votre 1er nettoyage
               </h2>
             </div>
 
-            <p style={{ color: '#a8cce0' }} className="text-base max-w-md">
+            <p style={{ color: '#a8cce0', maxWidth: '480px' }} className="text-base">
               Profitez de cette offre de bienvenue pour découvrir notre savoir-faire.
               Valable sur tous nos services, sans condition de montant minimum.
             </p>
@@ -86,13 +87,13 @@ export default function OfferBanner() {
               href="https://wa.me/41779915344"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp pulse-wa-btn inline-flex items-center gap-3 text-white font-bold px-8 py-4 rounded-full text-lg mt-2"
+              className="btn-whatsapp pulse-wa-btn inline-flex items-center gap-3 rounded-full text-lg"
             >
               <WaIcon />
               Je profite de l'offre
             </a>
 
-            <p className="text-xs mt-1" style={{ color: '#6a90a8' }}>
+            <p className="text-xs" style={{ color: '#6a90a8' }}>
               Devis gratuit · Pas d'engagement · Réponse sous 24h
             </p>
           </div>
