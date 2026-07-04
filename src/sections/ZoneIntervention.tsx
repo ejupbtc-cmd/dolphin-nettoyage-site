@@ -2,19 +2,11 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { MapPin } from 'lucide-react'
 
-const cities = [
-  { name: 'Yverdon-les-Bains', main: true },
-  { name: 'Lausanne', main: true },
-  { name: 'Nyon' },
-  { name: 'Morges' },
-  { name: 'Vevey' },
-  { name: 'Payerne' },
-  { name: 'Orbe' },
-  { name: 'Grandson' },
-  { name: 'Pomy' },
-  { name: 'Chavornay' },
-  { name: 'Echallens' },
-  { name: 'Moudon' },
+const mainCities = ['Yverdon-les-Bains', 'Lausanne']
+const otherCities = [
+  'Nyon', 'Morges', 'Vevey', 'Payerne',
+  'Orbe', 'Grandson', 'Pomy', 'Chavornay',
+  'Echallens', 'Moudon',
 ]
 
 export default function ZoneIntervention() {
@@ -25,26 +17,20 @@ export default function ZoneIntervention() {
     <section
       id="zone"
       ref={ref}
-      className="section-pad relative overflow-hidden"
+      className="section-pad relative"
       style={{ background: 'var(--bg-ice)' }}
     >
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0, height: '50%',
-          background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(46,134,171,0.06) 0%, transparent 70%)',
-        }} />
-      </div>
-
-      <div className="container-page relative z-10" style={{ maxWidth: '1024px' }}>
+      <div className="container-page">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 36 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
-          style={{ maxWidth: '640px', marginInline: 'auto' }}
+          className="text-center mb-14"
+          style={{ maxWidth: '600px', marginInline: 'auto' }}
         >
           <span className="eyebrow mb-6 block">Zone d'intervention</span>
-          <h2 className="h2-section mb-6">
+          <h2 className="h2-section mb-5">
             Tout le <span className="gradient-text">Canton de Vaud</span>
           </h2>
           <p className="body-lg">
@@ -53,78 +39,124 @@ export default function ZoneIntervention() {
           </p>
         </motion.div>
 
-        {/* Illustrative map-style layout */}
+        {/* Card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="card relative overflow-hidden p-6 sm:p-10 lg:p-14"
+          initial={{ opacity: 0, y: 28 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.15, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+          className="card"
+          style={{ padding: 'clamp(28px, 5vw, 56px)' }}
         >
-          {/* Decorative circle */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="absolute rounded-full"
-                style={{
-                  border: '1px solid rgba(46,134,171,0.12)',
-                  width: `${(i + 1) * 180}px`,
-                  height: `${(i + 1) * 180}px`,
-                  top: '50%', left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  opacity: 0.6 - i * 0.15,
-                }}
-              />
-            ))}
-            <div className="w-4 h-4 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              style={{ background: 'var(--aqua)', boxShadow: '0 0 20px rgba(91,192,222,0.6)' }} />
-          </div>
+          <div className="flex flex-col lg:flex-row" style={{ gap: '48px' }}>
 
-          <div className="flex flex-col sm:flex-row items-center" style={{ gap: '48px' }}>
-            {/* Main badge */}
-            <div className="flex-shrink-0 text-center">
-              <div className="card inline-flex flex-col items-center" style={{ gap: '12px', padding: '24px 32px' }}>
-                <MapPin size={36} style={{ color: 'var(--blue-light)' }} />
-                <div>
-                  <div className="h3-card" style={{ fontSize: '18px' }}>
-                    Yverdon-les-Bains
+            {/* Left: base principale */}
+            <div
+              className="flex-shrink-0"
+              style={{ minWidth: '220px' }}
+            >
+              <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--blue)' }}>
+                Base principale
+              </p>
+              <div className="flex flex-col" style={{ gap: '12px' }}>
+                {mainCities.map(city => (
+                  <div
+                    key={city}
+                    className="flex items-center gap-3 rounded-xl"
+                    style={{
+                      padding: '14px 18px',
+                      background: 'rgba(46,134,171,0.07)',
+                      border: '1.5px solid rgba(46,134,171,0.18)',
+                    }}
+                  >
+                    <MapPin size={16} style={{ color: 'var(--blue-light)', flexShrink: 0 }} />
+                    <span className="font-semibold text-sm" style={{ color: 'var(--navy-deep)' }}>{city}</span>
                   </div>
-                  <div className="text-sm" style={{ color: 'var(--blue)' }}>& Lausanne</div>
-                  <div className="text-sm-meta mt-1">Base principale</div>
+                ))}
+              </div>
+
+              {/* Stat pill */}
+              <div
+                className="flex items-center gap-3 rounded-xl mt-6"
+                style={{
+                  padding: '14px 18px',
+                  background: 'linear-gradient(135deg, rgba(30,96,145,0.08), rgba(46,134,171,0.05))',
+                  border: '1px solid rgba(30,96,145,0.12)',
+                }}
+              >
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'rgba(91,192,222,0.15)' }}
+                >
+                  <span style={{ fontSize: '14px' }}>📍</span>
+                </div>
+                <div>
+                  <div className="text-sm font-bold" style={{ color: 'var(--navy-deep)' }}>Canton de Vaud</div>
+                  <div className="text-xs" style={{ color: 'var(--text-muted)' }}>Couverture complète</div>
                 </div>
               </div>
             </div>
 
-            {/* City grid */}
-            <div>
-              <p className="text-sm mb-5 font-medium" style={{ color: 'var(--text-muted)' }}>Communes desservies :</p>
-              <div className="flex flex-wrap" style={{ gap: '12px' }}>
-                {cities.map(city => (
-                  <span
-                    key={city.name}
-                    className="inline-flex items-center gap-2 text-sm font-medium transition-all duration-200 hover:scale-105"
+            {/* Divider */}
+            <div
+              className="hidden lg:block flex-shrink-0 w-px"
+              style={{ background: 'var(--border-soft)' }}
+              aria-hidden="true"
+            />
+            <div
+              className="block lg:hidden h-px w-full"
+              style={{ background: 'var(--border-soft)' }}
+              aria-hidden="true"
+            />
+
+            {/* Right: all cities */}
+            <div className="flex-1">
+              <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: 'var(--blue)' }}>
+                Communes desservies
+              </p>
+              <div className="flex flex-wrap" style={{ gap: '10px' }}>
+                {otherCities.map((city, i) => (
+                  <motion.span
+                    key={city}
+                    initial={{ opacity: 0, scale: 0.88 }}
+                    animate={inView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ delay: 0.25 + i * 0.04, duration: 0.35 }}
+                    className="inline-flex items-center text-sm font-medium rounded-full"
                     style={{
-                      padding: '10px 20px',
-                      borderRadius: '999px',
-                      background: city.main ? 'rgba(46,134,171,0.12)' : 'rgba(46,134,171,0.05)',
-                      border: city.main ? '1.5px solid rgba(46,134,171,0.3)' : '1px solid var(--border-soft)',
-                      color: city.main ? 'var(--blue)' : 'var(--text-muted)',
+                      padding: '8px 18px',
+                      background: 'rgba(46,134,171,0.05)',
+                      border: '1px solid var(--border-soft)',
+                      color: 'var(--text-muted)',
                     }}
                   >
-                    {city.main && <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--blue-light)' }} />}
-                    {city.name}
-                  </span>
+                    {city}
+                  </motion.span>
                 ))}
                 <span
-                  className="inline-flex items-center text-sm"
+                  className="inline-flex items-center text-sm rounded-full"
                   style={{
-                    padding: '10px 20px',
-                    borderRadius: '999px',
-                    border: '1px dashed rgba(46,134,171,0.3)',
+                    padding: '8px 18px',
+                    border: '1px dashed rgba(46,134,171,0.28)',
                     color: 'var(--text-muted)',
+                    fontStyle: 'italic',
                   }}
                 >
                   + et bien d'autres…
                 </span>
               </div>
+
+              <p className="text-sm mt-6" style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Vous ne voyez pas votre commune ?{' '}
+                <a
+                  href="https://wa.me/41779915344"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold"
+                  style={{ color: 'var(--blue)' }}
+                >
+                  Contactez-nous
+                </a>{' '}
+                pour vérifier la disponibilité dans votre zone.
+              </p>
             </div>
           </div>
         </motion.div>
