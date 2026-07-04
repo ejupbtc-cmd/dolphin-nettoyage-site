@@ -289,7 +289,9 @@ function RealisationModal({ initial, onSave, onClose }: {
 }) {
   const [form, setForm] = useState<RealisationForm>(initial)
   const [mediaTab, setMediaTab] = useState<'image' | 'video'>(initial.video ? 'video' : 'image')
+  const [imgTab, setImgTab] = useState<'url' | 'upload'>('url')
   const [errors, setErrors] = useState<Record<string, boolean>>({})
+  const fileRef = useRef<HTMLInputElement>(null)
 
   const set = (k: keyof RealisationForm, v: string) => {
     setForm(f => ({ ...f, [k]: v }))
@@ -360,13 +362,82 @@ function RealisationModal({ initial, onSave, onClose }: {
           {/* Media input */}
           {mediaTab === 'image' ? (
             <div style={{ marginBottom: 20 }}>
-              <label style={lbl}>URL de l'image *</label>
-              <input
-                style={inp(errors.image)} value={form.image} placeholder="https://..."
-                onChange={e => set('image', e.target.value)}
-              />
-              {errors.image && <p style={{ color: '#e55', fontSize: 12, margin: '4px 0 0' }}>URL requise</p>}
-              {form.image && (
+              {/* URL / Upload toggle */}
+              <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+                {(['url', 'upload'] as const).map(t => (
+                  <button key={t} type="button" onClick={() => setImgTab(t)} style={{
+                    padding: '6px 16px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                    fontWeight: 700, fontSize: 12,
+                    background: imgTab === t ? '#0B1B2E' : 'rgba(30,96,145,0.07)',
+                    color: imgTab === t ? '#fff' : '#5A6B80',
+                  }}>
+                    {t === 'url' ? '🔗 URL' : '📁 Depuis l\'appareil'}
+                  </button>
+                ))}
+              </div>
+
+              {imgTab === 'url' ? (
+                <>
+                  <label style={lbl}>URL de l'image *</label>
+                  <input
+                    style={inp(errors.image)} value={form.image.startsWith('data:') ? '' : form.image}
+                    placeholder="https://..."
+                    onChange={e => set('image', e.target.value)}
+                  />
+                </>
+              ) : (
+                <>
+                  <label style={lbl}>Photo depuis votre appareil *</label>
+                  <input
+                    ref={fileRef}
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={e => {
+                      const file = e.target.files?.[0]
+                      if (!file) return
+                      const reader = new FileReader()
+                      reader.onload = ev => {
+                        const result = ev.target?.result as string
+                        set('image', result)
+                        setErrors(err => ({ ...err, image: false }))
+                      }
+                      reader.readAsDataURL(file)
+                    }}
+                  />
+                  <div
+                    onClick={() => fileRef.current?.click()}
+                    style={{
+                      border: `2px dashed ${errors.image ? '#e55' : 'rgba(30,96,145,0.25)'}`,
+                      borderRadius: 12, padding: '28px 20px', textAlign: 'center',
+                      cursor: 'pointer', background: 'rgba(46,134,171,0.03)',
+                      transition: 'border-color 0.15s',
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.borderColor = '#2E86AB')}
+                    onMouseLeave={e => (e.currentTarget.style.borderColor = errors.image ? '#e55' : 'rgba(30,96,145,0.25)')}
+                  >
+                    {form.image && form.image.startsWith('data:') ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                        <img src={form.image} alt="preview" style={{ maxHeight: 120, borderRadius: 8, objectFit: 'contain' }} />
+                        <span style={{ fontSize: 12, color: '#2E86AB', fontWeight: 600 }}>Cliquer pour changer</span>
+                      </div>
+                    ) : (
+                      <>
+                        <div style={{ fontSize: 32, marginBottom: 8 }}>📷</div>
+                        <p style={{ fontSize: 14, fontWeight: 600, color: '#0B1B2E', margin: '0 0 4px' }}>
+                          Cliquez pour sélectionner une photo
+                        </p>
+                        <p style={{ fontSize: 12, color: '#5A6B80', margin: 0 }}>
+                          JPG, PNG, WEBP — depuis votre appareil photo ou galerie
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </>
+              )}
+
+              {errors.image && <p style={{ color: '#e55', fontSize: 12, margin: '4px 0 0' }}>Image requise</p>}
+              {form.image && !form.image.startsWith('data:') && imgTab === 'url' && (
                 <div style={{ marginTop: 10, borderRadius: 10, overflow: 'hidden', background: '#EEF4FA', aspectRatio: '16/9', maxWidth: 300 }}>
                   <img src={form.image} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                     onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
