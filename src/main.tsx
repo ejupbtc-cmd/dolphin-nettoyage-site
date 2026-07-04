@@ -5,7 +5,8 @@ import App from './App.tsx'
 import AdminApp from './admin/AdminApp.tsx'
 import { SiteDataProvider } from './context/SiteDataContext.tsx'
 
-const isAdmin = window.location.pathname.startsWith('/admin')
+const { pathname, search } = window.location
+const isAdmin = pathname.startsWith('/admin') || new URLSearchParams(search).has('admin')
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -64,7 +64,6 @@ export default function WhyUs() {
       className="section-pad relative overflow-hidden"
       style={{ background: 'var(--white)' }}
     >
-      {/* Subtle background accent */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
@@ -75,19 +74,20 @@ export default function WhyUs() {
 
       <div className="container-page relative z-10">
         <div className="grid lg:grid-cols-2 items-center" style={{ gap: '80px' }}>
-          {/* Text side */}
+
+          {/* ── Text side ── */}
           <div>
             <span className="eyebrow mb-6 block">Pourquoi nous choisir</span>
             <h2 className="h2-section mb-6">
               L'excellence qui fait<br />
               <span className="gradient-text">la différence</span>
             </h2>
-            <p className="body-lg" style={{ marginBottom: '64px' }}>
+            <p className="body-lg" style={{ marginBottom: '56px' }}>
               Nous ne faisons pas que nettoyer — nous nous engageons sur chaque prestation
               pour un résultat impeccable et une expérience client sans friction.
             </p>
 
-            <div className="flex flex-col" style={{ gap: '32px' }}>
+            <div className="flex flex-col" style={{ gap: '28px' }}>
               {differentiators.map(d => {
                 const Icon = d.icon
                 return (
@@ -95,7 +95,7 @@ export default function WhyUs() {
                     <div
                       className="flex-shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-0.5"
                       style={{
-                        width: '48px', height: '48px',
+                        width: '52px', height: '52px',
                         background: `${d.color}12`,
                         border: `1.5px solid ${d.color}28`,
                         boxShadow: `0 2px 12px ${d.color}18`,
@@ -103,11 +103,11 @@ export default function WhyUs() {
                     >
                       <Icon size={22} style={{ color: d.color }} aria-hidden="true" />
                     </div>
-                    <div>
-                      <h3 className="h3-card" style={{ fontSize: '18px', marginBottom: '4px' }}>
+                    <div style={{ paddingTop: '2px' }}>
+                      <h3 className="h3-card" style={{ fontSize: '17px', marginBottom: '6px' }}>
                         {d.title}
                       </h3>
-                      <p className="body-md" style={{ fontSize: '15px' }}>
+                      <p className="body-md" style={{ fontSize: '14px', lineHeight: 1.65 }}>
                         {d.desc}
                       </p>
                     </div>
@@ -117,10 +117,11 @@ export default function WhyUs() {
             </div>
           </div>
 
-          {/* Visual side */}
+          {/* ── Visual side ── */}
           <div className="why-visual hidden lg:block" style={{ opacity: 0 }}>
-            <div className="relative">
-              {/* Main photo card */}
+            {/* Outer wrapper with padding to let floating cards breathe */}
+            <div className="relative" style={{ paddingTop: '24px', paddingRight: '24px' }}>
+              {/* Main photo */}
               <div
                 className="relative overflow-hidden"
                 style={{
@@ -144,44 +145,56 @@ export default function WhyUs() {
                     mixBlendMode: 'multiply',
                   }}
                 />
-                {/* 100% stat card — fully contained inside image */}
+                {/* Bottom stat card inside photo */}
                 <div
-                  className="absolute bottom-6 left-6 right-6 rounded-2xl p-6"
+                  className="absolute rounded-2xl"
                   style={{
-                    background: 'rgba(255,255,255,0.92)',
-                    backdropFilter: 'blur(12px)',
-                    border: '1px solid var(--border-soft)',
-                    boxShadow: '0 4px 20px rgba(46,134,171,0.12)',
+                    bottom: '24px', left: '24px',
+                    padding: '18px 24px',
+                    background: 'rgba(255,255,255,0.94)',
+                    backdropFilter: 'blur(14px)',
+                    border: '1px solid rgba(255,255,255,0.8)',
+                    boxShadow: '0 4px 24px rgba(11,27,46,0.14)',
+                    minWidth: '160px',
                   }}
                 >
-                  <div className="text-2xl font-black gradient-text" style={{ fontFamily: 'Sora, sans-serif' }}>
+                  <div
+                    className="font-black gradient-text"
+                    style={{ fontFamily: 'Sora, sans-serif', fontSize: '28px', lineHeight: 1 }}
+                  >
                     100%
                   </div>
-                  <div className="text-sm font-medium" style={{ color: 'var(--blue)' }}>
+                  <div className="text-sm font-semibold mt-1" style={{ color: 'var(--navy-deep)' }}>
                     Clients satisfaits
                   </div>
                 </div>
               </div>
 
-              {/* Floating 24h card — properly anchored, not cropped */}
+              {/* Floating top-right card — sits in the padding space */}
               <div
-                className="absolute -top-4 -right-4 rounded-2xl px-5 py-4 text-center"
+                className="absolute rounded-2xl text-center"
                 style={{
+                  top: 0, right: 0,
+                  padding: '18px 22px',
                   background: '#FFFFFF',
                   border: '1.5px solid var(--border-soft)',
-                  boxShadow: '0 8px 32px rgba(46,134,171,0.16)',
-                  minWidth: '96px',
+                  boxShadow: '0 8px 32px rgba(46,134,171,0.18)',
+                  minWidth: '100px',
                 }}
               >
-                <div className="text-2xl font-black gradient-text" style={{ fontFamily: 'Sora, sans-serif' }}>
+                <div
+                  className="font-black gradient-text"
+                  style={{ fontFamily: 'Sora, sans-serif', fontSize: '26px', lineHeight: 1 }}
+                >
                   24h
                 </div>
-                <div className="text-xs font-medium mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                <div className="text-xs font-medium mt-1.5" style={{ color: 'var(--text-muted)' }}>
                   Délai de réponse
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
