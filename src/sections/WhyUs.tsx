@@ -11,26 +11,42 @@ const differentiators = [
     title: 'Devis gratuit sous 24h',
     desc: 'Envoyez-nous votre demande, nous vous répondons en moins de 24 heures avec un devis personnalisé et transparent.',
     color: '#1E6091',
+    floatClass: 'icon-float',
   },
   {
     icon: Zap,
     title: 'Intervention rapide',
     desc: 'Nos équipes sont disponibles rapidement sur tout le Canton de Vaud. Urgence ou planification, nous nous adaptons.',
     color: '#2E86AB',
+    floatClass: 'icon-float-2',
   },
   {
     icon: Leaf,
     title: 'Écologique & sans eau',
     desc: 'Notre nettoyage extérieur voiture est 100% écologique, sans eau — moins de gaspillage, résultats supérieurs.',
     color: '#2A9D6E',
+    floatClass: 'icon-float-3',
   },
   {
     icon: Users,
     title: 'Particuliers & Professionnels',
     desc: 'Que vous soyez particulier, PME, cabinet médical ou gérant Airbnb, nous avons la solution adaptée.',
     color: '#2E86AB',
+    floatClass: 'icon-float-4',
   },
 ]
+
+function StarRating({ count = 5 }: { count?: number }) {
+  return (
+    <div className="flex gap-0.5" aria-label={`${count} étoiles sur 5`}>
+      {Array.from({ length: count }).map((_, i) => (
+        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      ))}
+    </div>
+  )
+}
 
 export default function WhyUs() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -73,7 +89,7 @@ export default function WhyUs() {
       />
 
       <div className="container-page relative z-10">
-        <div className="grid lg:grid-cols-2 items-center" style={{ gap: '80px' }}>
+        <div className="grid lg:grid-cols-2 items-center" style={{ gap: 'clamp(40px, 6vw, 80px)' }}>
 
           {/* ── Text side ── */}
           <div>
@@ -88,20 +104,32 @@ export default function WhyUs() {
             </p>
 
             <div className="flex flex-col" style={{ gap: '28px' }}>
-              {differentiators.map(d => {
+              {differentiators.map((d, idx) => {
                 const Icon = d.icon
                 return (
-                  <div key={d.title} className="why-item flex group" style={{ opacity: 0, gap: '20px' }}>
+                  <div key={d.title} className="why-item flex group" style={{ opacity: 0, gap: '20px', alignItems: 'flex-start' }}>
                     <div
-                      className="flex-shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-0.5"
+                      className={`flex-shrink-0 rounded-xl flex items-center justify-center relative ${d.floatClass}`}
                       style={{
                         width: '52px', height: '52px',
                         background: `${d.color}12`,
                         border: `1.5px solid ${d.color}28`,
                         boxShadow: `0 2px 12px ${d.color}18`,
+                        color: d.color,
                       }}
                     >
                       <Icon size={22} style={{ color: d.color }} aria-hidden="true" />
+                      {/* Animated ring on first item */}
+                      {idx === 0 && (
+                        <span
+                          className="absolute inset-0 rounded-xl pointer-events-none"
+                          style={{
+                            border: `2px solid ${d.color}`,
+                            animation: 'ringExpand 2.5s ease-out infinite',
+                          }}
+                          aria-hidden="true"
+                        />
+                      )}
                     </div>
                     <div style={{ paddingTop: '2px' }}>
                       <h3 className="h3-card" style={{ fontSize: '17px', marginBottom: '6px' }}>
@@ -115,13 +143,38 @@ export default function WhyUs() {
                 )
               })}
             </div>
+
+            {/* Mobile satisfaction pill */}
+            <div
+              className="flex items-center gap-3 mt-8 lg:hidden rounded-2xl"
+              style={{
+                padding: '16px 20px',
+                background: 'rgba(46,134,171,0.05)',
+                border: '1px solid rgba(46,134,171,0.14)',
+              }}
+            >
+              <div
+                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-lg"
+                style={{ background: 'rgba(46,134,171,0.1)' }}
+                aria-hidden="true"
+              >
+                🏅
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <StarRating count={5} />
+                  <span className="text-xs font-bold" style={{ color: 'var(--navy-deep)' }}>5/5</span>
+                </div>
+                <p className="text-xs font-semibold" style={{ color: 'var(--text-muted)', lineHeight: 1.4 }}>
+                  100% clients satisfaits · Canton de Vaud
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* ── Visual side ── */}
           <div className="why-visual hidden lg:block" style={{ opacity: 0 }}>
-            {/* Outer wrapper with padding to let floating cards breathe */}
             <div className="relative" style={{ paddingTop: '24px', paddingRight: '24px' }}>
-              {/* Main photo */}
               <div
                 className="relative overflow-hidden"
                 style={{
@@ -145,7 +198,6 @@ export default function WhyUs() {
                     mixBlendMode: 'multiply',
                   }}
                 />
-                {/* Bottom stat card inside photo */}
                 <div
                   className="absolute rounded-2xl"
                   style={{
@@ -170,7 +222,6 @@ export default function WhyUs() {
                 </div>
               </div>
 
-              {/* Floating top-right card — sits in the padding space */}
               <div
                 className="absolute rounded-2xl text-center"
                 style={{
