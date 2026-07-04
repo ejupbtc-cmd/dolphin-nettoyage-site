@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+:root {
+  --navy: #0B2545;
+  --ocean: #1E6091;
+  --blue: #2E86AB;
+  --aqua: #5BC0DE;
+  --turquoise: #7FDBFF;
+  --white: #F8FAFF;
+  --glass-bg: rgba(14, 40, 80, 0.45);
+  --glass-border: rgba(91, 192, 222, 0.2);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0B2545;
+  color: #F8FAFF;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Sora', sans-serif;
+  letter-spacing: -0.03em;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.glass-card {
+  background: rgba(14, 40, 80, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(91, 192, 222, 0.18);
+  box-shadow: 0 8px 32px rgba(11, 37, 69, 0.4), inset 0 1px 0 rgba(127, 219, 255, 0.08);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #7FDBFF 0%, #5BC0DE 45%, #2E86AB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2E86AB, #1E6091);
+  box-shadow: 0 4px 24px rgba(46, 134, 171, 0.45);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(46, 134, 171, 0.65);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-outline {
+  border: 1.5px solid rgba(91, 192, 222, 0.5);
+  background: rgba(46, 134, 171, 0.1);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-outline:hover {
+  border-color: #7FDBFF;
+  background: rgba(46, 134, 171, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 24px rgba(127, 219, 255, 0.2);
+}
+
+.btn-whatsapp {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  box-shadow: 0 4px 24px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(37, 211, 102, 0.65);
+}
+
+@keyframes waveAnim {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.4), 0 4px 24px rgba(37, 211, 102, 0.3); }
+  50% { box-shadow: 0 0 50px rgba(37, 211, 102, 0.8), 0 4px 40px rgba(37, 211, 102, 0.6); }
+}
+
+.pulse-wa { animation: pulseGlow 2.5s ease-in-out infinite; }
+
+@keyframes badgeBounce {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(-2deg); }
+}
+
+.badge-float { animation: badgeBounce 3s ease-in-out infinite; }
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #7FDBFF, #fff, #7FDBFF);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0B2545; }
+::-webkit-scrollbar-thumb { background: #2E86AB; border-radius: 3px; }
