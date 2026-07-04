@@ -61,7 +61,7 @@ export default function WhyUs() {
     <section
       id="pourquoi"
       ref={sectionRef}
-      className="relative py-24 px-4 overflow-hidden"
+      className="relative py-32 px-6 overflow-hidden"
       style={{ background: '#FFFFFF' }}
     >
       {/* Subtle background accent */}
@@ -74,7 +74,7 @@ export default function WhyUs() {
       />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
           {/* Text side */}
           <div>
             <span className="section-label">Pourquoi nous choisir</span>
@@ -82,12 +82,12 @@ export default function WhyUs() {
               L'excellence qui fait<br />
               <span className="gradient-text">la différence</span>
             </h2>
-            <p className="text-lg mb-10 leading-relaxed" style={{ color: '#4A6580' }}>
+            <p className="text-lg mb-12 leading-relaxed" style={{ color: '#4A6580' }}>
               Nous ne faisons pas que nettoyer — nous nous engageons sur chaque prestation
               pour un résultat impeccable et une expérience client sans friction.
             </p>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
               {differentiators.map(d => {
                 const Icon = d.icon
                 return (

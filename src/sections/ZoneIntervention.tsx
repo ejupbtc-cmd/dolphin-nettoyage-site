@@ -25,7 +25,7 @@ export default function ZoneIntervention() {
     <section
       id="zone"
       ref={ref}
-      className="relative py-24 px-4 overflow-hidden"
+      className="relative py-32 px-6 overflow-hidden"
       style={{ background: '#EEF4FA' }}
     >
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -40,7 +40,7 @@ export default function ZoneIntervention() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-20"
         >
           <span className="section-label">Zone d'intervention</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4" style={{ color: '#0F1C2E' }}>
@@ -57,7 +57,7 @@ export default function ZoneIntervention() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="card rounded-3xl p-8 sm:p-10 relative overflow-hidden"
+          className="card rounded-3xl p-10 sm:p-14 relative overflow-hidden"
         >
           {/* Decorative circle */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -77,7 +77,7 @@ export default function ZoneIntervention() {
               style={{ boxShadow: '0 0 20px rgba(91,192,222,0.6)' }} />
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-8">
+          <div className="flex flex-col sm:flex-row items-center gap-12">
             {/* Main badge */}
             <div className="flex-shrink-0 text-center">
               <div className="inline-flex flex-col items-center gap-3 card rounded-2xl px-8 py-6">
@@ -94,12 +94,12 @@ export default function ZoneIntervention() {
 
             {/* City grid */}
             <div>
-              <p className="text-sm mb-4 font-medium" style={{ color: '#8BA4BA' }}>Communes desservies :</p>
-              <div className="flex flex-wrap gap-2">
+              <p className="text-sm mb-5 font-medium" style={{ color: '#8BA4BA' }}>Communes desservies :</p>
+              <div className="flex flex-wrap gap-3">
                 {cities.map(city => (
                   <span
                     key={city.name}
-                    className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-all duration-200 hover:scale-105"
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105"
                     style={{
                       background: city.main ? 'rgba(46,134,171,0.12)' : 'rgba(46,134,171,0.05)',
                       border: city.main ? '1.5px solid rgba(46,134,171,0.3)' : '1px solid rgba(46,134,171,0.12)',

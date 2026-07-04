@@ -55,7 +55,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="relative py-24 px-4 overflow-hidden"
+      className="relative py-32 px-6 overflow-hidden"
       style={{ background: '#EEF4FA' }}
     >
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -75,7 +75,7 @@ export default function Contact() {
         >
           {/* Glass card */}
           <div
-            className="rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden"
+            className="rounded-3xl p-10 sm:p-16 text-center relative overflow-hidden"
             style={{
               background: '#FFFFFF',
               border: '1px solid rgba(46,134,171,0.12)',
@@ -103,7 +103,7 @@ export default function Contact() {
             </p>
 
             {/* Contact buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               {contactItems.map(item => (
                 <a
                   key={item.label}

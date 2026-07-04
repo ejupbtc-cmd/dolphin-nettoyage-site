@@ -17,7 +17,7 @@ export default function OfferBanner() {
   return (
     <section
       ref={ref}
-      className="relative py-24 px-4 overflow-hidden"
+      className="relative py-32 px-6 overflow-hidden"
       style={{ background: '#071525' }}
       aria-labelledby="offer-heading"
     >
@@ -34,7 +34,7 @@ export default function OfferBanner() {
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden offer-glow shine-sweep"
+          className="rounded-3xl p-10 sm:p-16 text-center relative overflow-hidden offer-glow shine-sweep"
           style={{
             background: 'rgba(14,40,80,0.55)',
             backdropFilter: 'blur(20px)',
@@ -63,7 +63,7 @@ export default function OfferBanner() {
             </div>
           </motion.div>
 
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-6">
             <div>
               <span
                 id="offer-heading"

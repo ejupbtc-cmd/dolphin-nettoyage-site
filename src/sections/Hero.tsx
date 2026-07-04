@@ -47,7 +47,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center items-center text-center px-4 pt-20 pb-8 overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 overflow-hidden"
       style={{ background: 'linear-gradient(170deg, #E8F4FC 0%, #F4F9FD 45%, #FFFFFF 100%)' }}
     >
       {/* Animated gradient blobs */}
@@ -124,7 +124,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-8"
+          className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 mb-10"
           style={{
             background: 'rgba(46,134,171,0.08)',
             border: '1px solid rgba(46,134,171,0.18)',
@@ -148,7 +148,7 @@ export default function Hero() {
 
         <p
           ref={subRef}
-          className="text-base sm:text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto"
+          className="text-base sm:text-lg md:text-xl leading-relaxed mb-12 max-w-2xl mx-auto"
           style={{ opacity: 0, color: '#4A6580' }}
         >
           Particuliers &amp; professionnels —{' '}
@@ -187,7 +187,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.15, duration: 0.8 }}
-          className="flex flex-wrap justify-center gap-6 mt-12"
+          className="flex flex-wrap justify-center gap-8 mt-16"
         >
           {trustItems.map(item => (
             <div key={item.label} className="flex items-center gap-2">

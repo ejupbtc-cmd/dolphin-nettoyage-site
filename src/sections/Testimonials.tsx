@@ -93,7 +93,7 @@ export default function Testimonials() {
     <section
       id="avis"
       ref={ref}
-      className="relative py-24 px-4 overflow-hidden"
+      className="relative py-32 px-6 overflow-hidden"
       style={{ background: '#FFFFFF' }}
     >
       <div className="max-w-6xl mx-auto relative z-10">
@@ -101,7 +101,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-20"
         >
           <span className="section-label">Avis clients</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4" style={{ color: '#0F1C2E' }}>
@@ -113,14 +113,14 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.name}
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 * i + 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="card rounded-2xl p-6 flex flex-col gap-4 group hover:scale-[1.02] transition-all duration-300"
+              className="card rounded-2xl p-8 flex flex-col gap-5 group hover:scale-[1.02] transition-all duration-300"
             >
               <div className="flex items-center justify-between">
                 <Stars inView={inView} />

@@ -80,12 +80,12 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="relative py-24 px-4"
+      className="relative py-32 px-6"
       style={{ background: '#EEF4FA' }}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div ref={titleRef} className="text-center mb-16" style={{ opacity: 0 }}>
+        <div ref={titleRef} className="text-center mb-20" style={{ opacity: 0 }}>
           <span className="section-label">Ce que nous faisons</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4" style={{ color: '#0F1C2E' }}>
             Nettoyage <span className="gradient-text">haut de gamme</span>
@@ -96,7 +96,7 @@ export default function Services() {
         </div>
 
         {/* Cards grid */}
-        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map(service => {
             const Icon = service.icon
             return (
@@ -132,7 +132,7 @@ export default function Services() {
                 </div>
 
                 {/* Icon badge — cleanly below image, above title */}
-                <div className="px-5 pt-5 pb-0 flex items-center gap-3">
+                <div className="px-6 pt-6 pb-0 flex items-center gap-3.5">
                   <div
                     className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-0.5"
                     style={{
@@ -152,10 +152,10 @@ export default function Services() {
                 </div>
 
                 {/* Content */}
-                <div className="p-5 pt-3">
-                  <ul className="space-y-2" role="list">
+                <div className="px-6 pt-4 pb-6">
+                  <ul className="space-y-3" role="list">
                     {service.items.map(item => (
-                      <li key={item} className="flex items-start gap-2 text-sm" style={{ color: '#4A6580' }}>
+                      <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed" style={{ color: '#4A6580' }}>
                         <span
                           className="mt-[3px] flex-shrink-0 w-1.5 h-1.5 rounded-full"
                           style={{ background: service.color }}
