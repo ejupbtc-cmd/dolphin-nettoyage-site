@@ -44,14 +44,13 @@ export default function Header() {
           <a
             href="#"
             onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-2 group"
           >
-            <img
-              src="/src/assets/logo-dolphin.svg"
-              alt="Dolphin Nettoyage logo"
-              className="h-12 md:h-14 w-auto object-contain drop-shadow-lg"
-              style={{ filter: 'brightness(0) invert(1) drop-shadow(0 0 6px rgba(127,219,255,0.4))' }}
-            />
+            <span className="text-3xl">🐬</span>
+            <div>
+              <div className="font-black text-white leading-tight tracking-tight" style={{ fontFamily: 'Sora, sans-serif', fontSize: '1.1rem' }}>DOLPHIN</div>
+              <div className="text-[#5BC0DE] font-semibold tracking-widest" style={{ fontSize: '0.6rem' }}>NETTOYAGE</div>
+            </div>
           </a>
 
           {/* Desktop Nav */}

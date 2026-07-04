@@ -38,13 +38,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="mb-4">
-              <img
-                src="/src/assets/logo-dolphin.svg"
-                alt="Dolphin Nettoyage"
-                className="h-14 w-auto object-contain"
-                style={{ filter: 'brightness(0) invert(1) drop-shadow(0 0 4px rgba(127,219,255,0.3))' }}
-              />
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-3xl">🐬</span>
+              <div>
+                <div className="font-black text-white leading-tight tracking-tight" style={{ fontFamily: 'Sora, sans-serif', fontSize: '1.1rem' }}>DOLPHIN</div>
+                <div className="text-[#5BC0DE] font-semibold tracking-widest" style={{ fontSize: '0.6rem' }}>NETTOYAGE</div>
+              </div>
             </div>
             <p className="text-sm text-[#6a90a8] leading-relaxed">
               Votre expert du nettoyage à domicile. Service haut de gamme pour particuliers et professionnels.
