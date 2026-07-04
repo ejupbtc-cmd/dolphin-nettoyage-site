@@ -1,9 +1,30 @@
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { X } from 'lucide-react'
+import { X, Play } from 'lucide-react'
 import { useSiteData } from '../context/SiteDataContext'
 
 const CATEGORIES = ['Tous', 'Textile', 'Voiture', 'Industriel', 'Surfaces', 'Autre']
+
+function getYouTubeId(url: string) {
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([A-Za-z0-9_-]{11})/)
+  return m ? m[1] : null
+}
+function getVimeoId(url: string) {
+  const m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/)
+  return m ? m[1] : null
+}
+function getEmbedUrl(url: string) {
+  const yt = getYouTubeId(url)
+  if (yt) return `https://www.youtube.com/embed/${yt}?autoplay=1&rel=0`
+  const vi = getVimeoId(url)
+  if (vi) return `https://player.vimeo.com/video/${vi}?autoplay=1`
+  return null
+}
+function getThumb(url: string) {
+  const yt = getYouTubeId(url)
+  if (yt) return `https://img.youtube.com/vi/${yt}/hqdefault.jpg`
+  return null
+}
 
 export default function Realisations() {
   const { realisations } = useSiteData()
@@ -16,6 +37,7 @@ export default function Realisations() {
 
   const filtered = filter === 'Tous' ? realisations : realisations.filter(r => r.category === filter)
   const selectedItem = realisations.find(r => r.id === selected)
+  const embedUrl = selectedItem?.video ? getEmbedUrl(selectedItem.video) : null
 
   return (
     <section
@@ -73,63 +95,101 @@ export default function Realisations() {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
-            {filtered.map((r, i) => (
-              <motion.div
-                key={r.id}
-                layout
-                initial={{ opacity: 0, scale: 0.93 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ delay: i * 0.06, duration: 0.5 }}
-                className="card group cursor-pointer overflow-hidden"
-                onClick={() => setSelected(r.id)}
-              >
-                <div style={{ aspectRatio: '4/3', overflow: 'hidden', position: 'relative' }}>
-                  <img
-                    src={r.image}
-                    alt={r.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div
-                    className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-                    style={{ background: 'rgba(30,96,145,0.35)' }}
-                  />
-                  <div
-                    className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    aria-hidden="true"
-                  >
-                    <span className="text-white font-semibold text-sm" style={{ background: 'rgba(255,255,255,0.15)', padding: '8px 18px', borderRadius: 20, backdropFilter: 'blur(8px)' }}>
-                      Voir en grand
-                    </span>
+            {filtered.map((r, i) => {
+              const thumb = r.video ? (getThumb(r.video) ?? r.image) : r.image
+              const hasVideo = !!r.video
+              return (
+                <motion.div
+                  key={r.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.93 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ delay: i * 0.06, duration: 0.5 }}
+                  className="card group cursor-pointer overflow-hidden"
+                  onClick={() => setSelected(r.id)}
+                >
+                  <div style={{ aspectRatio: '4/3', overflow: 'hidden', position: 'relative' }}>
+                    <img
+                      src={thumb}
+                      alt={r.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div
+                      className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                      style={{ background: 'rgba(30,96,145,0.35)' }}
+                    />
+                    {hasVideo && (
+                      <div
+                        className="absolute bottom-3 left-3"
+                        style={{
+                          background: 'rgba(11,27,46,0.7)',
+                          backdropFilter: 'blur(6px)',
+                          borderRadius: 6,
+                          padding: '3px 8px 3px 6px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 4,
+                          fontSize: 11,
+                          fontWeight: 600,
+                          color: '#fff',
+                        }}
+                      >
+                        <Play size={10} fill="#fff" />
+                        Vidéo
+                      </div>
+                    )}
+                    <div
+                      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      aria-hidden="true"
+                    >
+                      {hasVideo ? (
+                        <span
+                          style={{
+                            width: 52, height: 52, borderRadius: '50%',
+                            background: 'rgba(255,255,255,0.2)',
+                            backdropFilter: 'blur(8px)',
+                            border: '2px solid rgba(255,255,255,0.5)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          }}
+                        >
+                          <Play size={20} fill="#fff" color="#fff" />
+                        </span>
+                      ) : (
+                        <span className="text-white font-semibold text-sm" style={{ background: 'rgba(255,255,255,0.15)', padding: '8px 18px', borderRadius: 20, backdropFilter: 'blur(8px)' }}>
+                          Voir en grand
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className="p-5">
-                  <span
-                    className="inline-block text-xs font-semibold mb-2"
-                    style={{
-                      color: 'var(--blue)',
-                      background: 'rgba(46,134,171,0.08)',
-                      border: '1px solid rgba(46,134,171,0.18)',
-                      padding: '3px 10px',
-                      borderRadius: 6,
-                      letterSpacing: '0.04em',
-                    }}
-                  >
-                    {r.category}
-                  </span>
-                  <h3 className="h3-card" style={{ fontSize: '16px', marginBottom: r.description ? '6px' : 0 }}>
-                    {r.title}
-                  </h3>
-                  {r.description && (
-                    <p className="text-sm" style={{ color: 'var(--text-muted)', lineHeight: 1.55, margin: 0 }}>
-                      {r.description}
-                    </p>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+                  <div className="p-5">
+                    <span
+                      className="inline-block text-xs font-semibold mb-2"
+                      style={{
+                        color: 'var(--blue)',
+                        background: 'rgba(46,134,171,0.08)',
+                        border: '1px solid rgba(46,134,171,0.18)',
+                        padding: '3px 10px',
+                        borderRadius: 6,
+                        letterSpacing: '0.04em',
+                      }}
+                    >
+                      {r.category}
+                    </span>
+                    <h3 className="h3-card" style={{ fontSize: '16px', marginBottom: r.description ? '6px' : 0 }}>
+                      {r.title}
+                    </h3>
+                    {r.description && (
+                      <p className="text-sm" style={{ color: 'var(--text-muted)', lineHeight: 1.55, margin: 0 }}>
+                        {r.description}
+                      </p>
+                    )}
+                  </div>
+                </motion.div>
+              )
+            })}
           </AnimatePresence>
         </div>
       </div>
@@ -144,8 +204,8 @@ export default function Realisations() {
             onClick={() => setSelected(null)}
             style={{
               position: 'fixed', inset: 0, zIndex: 1000,
-              background: 'rgba(11,27,46,0.85)',
-              backdropFilter: 'blur(8px)',
+              background: 'rgba(11,27,46,0.88)',
+              backdropFilter: 'blur(10px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               padding: '24px',
             }}
@@ -157,31 +217,47 @@ export default function Realisations() {
               transition={{ type: 'spring', stiffness: 300, damping: 24 }}
               onClick={e => e.stopPropagation()}
               style={{
-                background: '#fff',
+                background: '#0B1B2E',
                 borderRadius: 20,
                 overflow: 'hidden',
-                maxWidth: 680,
+                maxWidth: embedUrl ? 780 : 680,
                 width: '100%',
-                boxShadow: '0 24px 80px rgba(11,27,46,0.4)',
+                boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
               }}
             >
               <div style={{ position: 'relative' }}>
-                <img src={selectedItem.image} alt={selectedItem.title} style={{ width: '100%', maxHeight: 420, objectFit: 'cover', display: 'block' }} />
+                {embedUrl ? (
+                  <div style={{ position: 'relative', paddingTop: '56.25%', background: '#000' }}>
+                    <iframe
+                      src={embedUrl}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                      title={selectedItem.title}
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={selectedItem.image}
+                    alt={selectedItem.title}
+                    style={{ width: '100%', maxHeight: 420, objectFit: 'cover', display: 'block' }}
+                  />
+                )}
                 <button
                   onClick={() => setSelected(null)}
                   style={{
                     position: 'absolute', top: 14, right: 14,
-                    background: 'rgba(11,27,46,0.6)', backdropFilter: 'blur(6px)',
-                    border: 'none', borderRadius: '50%', width: 36, height: 36,
+                    background: 'rgba(11,27,46,0.7)', backdropFilter: 'blur(6px)',
+                    border: '1px solid rgba(255,255,255,0.12)', borderRadius: '50%', width: 36, height: 36,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    cursor: 'pointer', color: '#fff',
+                    cursor: 'pointer', color: '#fff', zIndex: 2,
                   }}
                   aria-label="Fermer"
                 >
                   <X size={18} />
                 </button>
               </div>
-              <div style={{ padding: '20px 24px 24px' }}>
+              <div style={{ padding: '20px 24px 24px', background: '#fff' }}>
                 <span
                   style={{
                     fontSize: 11, fontWeight: 600, color: 'var(--blue)',

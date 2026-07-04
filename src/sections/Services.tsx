@@ -14,6 +14,7 @@ const servicesMeta = [
     color: '#1E6091',
     alt: 'Canapé tissu propre après nettoyage professionnel',
     items: ['Moquettes et tapis', 'Canapés et matelas', 'Fauteuils et chaises'],
+    floatClass: 'icon-float',
   },
   {
     id: 'voiture',
@@ -22,6 +23,7 @@ const servicesMeta = [
     color: '#2E86AB',
     alt: 'Intérieur de voiture nettoyé et détaillé',
     items: ['Intérieur complet', 'Nettoyage extérieur écologique (sans eau)', 'Siège auto bébé'],
+    floatClass: 'icon-float-2',
   },
   {
     id: 'industriel',
@@ -30,6 +32,7 @@ const servicesMeta = [
     color: '#2E86AB',
     alt: 'Nettoyage professionnel de bureaux et espaces industriels',
     items: ['Fin de chantier', 'Bureaux et commerces', 'Cabinets médicaux', 'Airbnb / location saisonnière'],
+    floatClass: 'icon-float-3',
   },
   {
     id: 'surfaces',
@@ -38,6 +41,7 @@ const servicesMeta = [
     color: '#1E6091',
     alt: 'Nettoyage de vitres avec raclette professionnelle',
     items: ['Vitres et vérandas', 'Terrasses et balcons', 'Espaces piscine', 'Entretien jardins'],
+    floatClass: 'icon-float-4',
   },
 ]
 
@@ -46,7 +50,7 @@ export default function Services() {
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef   = useRef<HTMLDivElement>(null)
   const cardsRef   = useRef<HTMLDivElement>(null)
-  const services = servicesMeta.map(s => ({ ...s, image: serviceImages[s.id] || '' }))
+  const services = servicesMeta.map(s => ({ ...s, image: serviceImages[s.id] || '', floatClass: s.floatClass }))
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -133,7 +137,7 @@ export default function Services() {
 
                   {/* Icon badge — straddling the photo/content boundary (bottom edge of photo) */}
                   <div
-                    className="absolute flex items-center justify-center"
+                    className={`absolute flex items-center justify-center ${service.floatClass}`}
                     style={{
                       bottom: 0, left: '50%',
                       transform: 'translate(-50%, 50%)',

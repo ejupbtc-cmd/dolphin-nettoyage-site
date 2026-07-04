@@ -7,6 +7,7 @@ const trustItems = [
   { icon: '📍', label: 'Canton de Vaud' },
   { icon: '✅', label: 'Devis gratuit' },
   { icon: '⚡', label: 'Réponse sous 24h' },
+  { icon: '⭐', label: '5/5 clients satisfaits' },
 ]
 
 function WaIcon() {
