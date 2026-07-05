@@ -96,12 +96,12 @@ export default function WhyUs() {
               L'excellence qui fait<br />
               <span className="gradient-text">la différence</span>
             </h2>
-            <p className="body-lg" style={{ marginBottom: 'clamp(32px, 5vw, 56px)' }}>
+            <p className="body-lg" style={{ marginBottom: 'clamp(24px, 4vw, 48px)' }}>
               Nous ne faisons pas que nettoyer — nous nous engageons sur chaque prestation
               pour un résultat impeccable et une expérience client sans friction.
             </p>
 
-            <div className="flex flex-col" style={{ gap: '28px' }}>
+            <div className="flex flex-col" style={{ gap: 'clamp(16px, 3.5vw, 28px)' }}>
               {differentiators.map((d, idx) => {
                 const Icon = d.icon
                 return (

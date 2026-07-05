@@ -26,7 +26,7 @@ export default function ZoneIntervention() {
           initial={{ opacity: 0, y: 36 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-8 md:mb-12"
           style={{ maxWidth: '600px', marginInline: 'auto' }}
         >
           <span className="eyebrow mb-6 block">Zone d'intervention</span>
@@ -45,9 +45,9 @@ export default function ZoneIntervention() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.15, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           className="card"
-          style={{ padding: 'clamp(28px, 5vw, 56px)' }}
+          style={{ padding: 'clamp(20px, 4vw, 48px)' }}
         >
-          <div className="flex flex-col lg:flex-row" style={{ gap: '48px' }}>
+          <div className="flex flex-col lg:flex-row" style={{ gap: 'clamp(24px, 5vw, 48px)' }}>
 
             {/* Left: base principale */}
             <div

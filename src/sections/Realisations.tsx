@@ -51,7 +51,7 @@ export default function Realisations() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-12"
+          className="text-center mb-8 md:mb-12"
           style={{ maxWidth: '640px', marginInline: 'auto' }}
         >
           <span className="eyebrow mb-6 block">Galerie</span>
@@ -68,7 +68,7 @@ export default function Realisations() {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.15, duration: 0.6 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-3 mb-8 md:mb-10"
         >
           {CATEGORIES.filter(c => c === 'Tous' || realisations.some(r => r.category === c)).map(cat => (
             <button
