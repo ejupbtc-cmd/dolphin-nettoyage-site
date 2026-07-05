@@ -130,14 +130,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="inline-flex items-center gap-2 rounded-full mb-6"
-          style={{
-            padding: '10px 16px',
-            background: 'rgba(46,134,171,0.08)',
-            border: '1px solid rgba(46,134,171,0.18)',
-          }}
+          className="mb-6"
         >
-          <span className="w-2 h-2 rounded-full animate-pulse flex-shrink-0" style={{ background: 'var(--aqua)' }} />
           <span className="eyebrow">
             Nettoyage professionnel<span className="hidden sm:inline"> — Canton de Vaud</span>
           </span>
