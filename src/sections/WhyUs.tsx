@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useInView } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Clock, Leaf, Zap, Users } from 'lucide-react'
@@ -36,20 +37,17 @@ const differentiators = [
   },
 ]
 
-function StarRating({ count = 5 }: { count?: number }) {
-  return (
-    <div className="flex gap-0.5" aria-label={`${count} étoiles sur 5`}>
-      {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B" aria-hidden="true">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-        </svg>
-      ))}
-    </div>
-  )
-}
+
+const keyStats = [
+  { value: '100%', label: 'Satisfaction client' },
+  { value: '24h', label: 'Délai de réponse' },
+  { value: '5★', label: 'Note moyenne' },
+]
 
 export default function WhyUs() {
   const sectionRef = useRef<HTMLElement>(null)
+  const statsRef = useRef<HTMLDivElement>(null)
+  const statsInView = useInView(statsRef, { once: true, margin: '-40px' })
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -144,31 +142,37 @@ export default function WhyUs() {
               })}
             </div>
 
-            {/* Mobile satisfaction pill */}
+            {/* Animated stats strip (mobile & desktop) */}
             <div
-              className="flex items-center gap-3 mt-8 lg:hidden rounded-2xl"
+              ref={statsRef}
+              className="grid grid-cols-3 gap-3 mt-10 lg:mt-8 rounded-2xl overflow-hidden"
               style={{
-                padding: '16px 20px',
-                background: 'rgba(46,134,171,0.05)',
                 border: '1px solid rgba(46,134,171,0.14)',
+                background: 'rgba(46,134,171,0.04)',
               }}
             >
-              <div
-                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-lg"
-                style={{ background: 'rgba(46,134,171,0.1)' }}
-                aria-hidden="true"
-              >
-                🏅
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <StarRating count={5} />
-                  <span className="text-xs font-bold" style={{ color: 'var(--navy-deep)' }}>5/5</span>
+              {keyStats.map((s, i) => (
+                <div
+                  key={s.label}
+                  className="flex flex-col items-center justify-center text-center py-4 px-2"
+                  style={{
+                    borderRight: i < keyStats.length - 1 ? '1px solid rgba(46,134,171,0.1)' : 'none',
+                    opacity: statsInView ? 1 : 0,
+                    transform: statsInView ? 'translateY(0)' : 'translateY(16px)',
+                    transition: `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s`,
+                  }}
+                >
+                  <span
+                    className="font-black gradient-text block leading-none"
+                    style={{ fontFamily: 'Sora, sans-serif', fontSize: 'clamp(18px, 4vw, 24px)' }}
+                  >
+                    {s.value}
+                  </span>
+                  <span className="text-xs mt-1 font-semibold" style={{ color: 'var(--text-muted)' }}>
+                    {s.label}
+                  </span>
                 </div>
-                <p className="text-xs font-semibold" style={{ color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                  100% clients satisfaits · Canton de Vaud
-                </p>
-              </div>
+              ))}
             </div>
           </div>
 

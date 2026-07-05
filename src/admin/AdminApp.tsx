@@ -677,12 +677,23 @@ function ServicesTab({ toast }: { toast: (msg: string, t?: 'success' | 'error') 
   const { serviceImages, setServiceImages } = useSiteData()
   const [editing, setEditing] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
+  const [inputMode, setInputMode] = useState<'url' | 'upload'>('url')
+  const fileRefs = useRef<Record<string, HTMLInputElement | null>>({})
 
-  const startEdit = (key: string) => { setEditing(key); setDraft(serviceImages[key] || '') }
+  const startEdit = (key: string) => { setEditing(key); setDraft(serviceImages[key] || ''); setInputMode('url') }
   const save = (key: string) => {
     setServiceImages({ ...serviceImages, [key]: draft })
     setEditing(null)
     toast('Image mise à jour ✓')
+  }
+
+  const handleFileUpload = (_key: string, file: File) => {
+    const reader = new FileReader()
+    reader.onload = ev => {
+      const result = ev.target?.result as string
+      setDraft(result)
+    }
+    reader.readAsDataURL(file)
   }
 
   return (
@@ -696,44 +707,106 @@ function ServicesTab({ toast }: { toast: (msg: string, t?: 'success' | 'error') 
         {Object.entries(SERVICE_META).map(([key, meta]) => (
           <div key={key} style={{
             background: '#fff', borderRadius: 16, border: '1px solid rgba(30,96,145,0.1)',
-            overflow: 'hidden', display: 'flex', boxShadow: '0 2px 8px rgba(11,27,46,0.04)',
+            overflow: 'hidden', boxShadow: '0 2px 8px rgba(11,27,46,0.04)',
           }}>
-            {/* Preview */}
-            <div style={{ width: 130, flexShrink: 0, background: '#EEF4FA', position: 'relative' }}>
-              {serviceImages[key] ? (
-                <img src={serviceImages[key]} alt={meta.label} style={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: 100 }}
-                  onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
-              ) : (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: 100, fontSize: 28 }}>{meta.emoji}</div>
-              )}
-            </div>
-            {/* Content */}
-            <div style={{ flex: 1, padding: '18px 20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                <span style={{ fontSize: 20 }}>{meta.emoji}</span>
-                <p style={{ fontFamily: 'Sora,sans-serif', fontSize: 15, fontWeight: 700, color: '#0B1B2E', margin: 0 }}>{meta.label}</p>
+            <div style={{ display: 'flex' }}>
+              {/* Preview */}
+              <div style={{ width: 130, flexShrink: 0, background: '#EEF4FA', position: 'relative', minHeight: 100 }}>
+                {serviceImages[key] ? (
+                  <img src={serviceImages[key]} alt={meta.label} style={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: 100 }}
+                    onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                ) : (
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: 100, fontSize: 28 }}>{meta.emoji}</div>
+                )}
               </div>
-              {editing === key ? (
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <input
-                    style={{ ...inp(), flex: 1 }} value={draft} autoFocus
-                    placeholder="https://images.unsplash.com/..."
-                    onChange={e => setDraft(e.target.value)}
-                    onKeyDown={e => { if (e.key === 'Enter') save(key); if (e.key === 'Escape') setEditing(null) }}
-                  />
-                  <button onClick={() => save(key)} style={{ ...btnPrimary, padding: '10px 18px', whiteSpace: 'nowrap' }}>OK</button>
-                  <button onClick={() => setEditing(null)} style={{ ...btnGhost, padding: '10px 14px' }}>✕</button>
+              {/* Content */}
+              <div style={{ flex: 1, padding: '18px 20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                  <span style={{ fontSize: 20 }}>{meta.emoji}</span>
+                  <p style={{ fontFamily: 'Sora,sans-serif', fontSize: 15, fontWeight: 700, color: '#0B1B2E', margin: 0 }}>{meta.label}</p>
                 </div>
-              ) : (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontSize: 12, color: '#5A6B80', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {serviceImages[key] ? serviceImages[key] : <em>Aucune image</em>}
-                  </span>
-                  <button onClick={() => startEdit(key)} style={{ ...btnEdit, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                    🖼️ Changer
-                  </button>
-                </div>
-              )}
+                {editing === key ? (
+                  <div>
+                    {/* Mode toggle */}
+                    <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
+                      {(['url', 'upload'] as const).map(m => (
+                        <button key={m} type="button" onClick={() => { setInputMode(m); setDraft('') }} style={{
+                          padding: '5px 14px', borderRadius: 8, border: 'none', cursor: 'pointer',
+                          fontWeight: 700, fontSize: 12,
+                          background: inputMode === m ? '#0B1B2E' : 'rgba(30,96,145,0.07)',
+                          color: inputMode === m ? '#fff' : '#5A6B80',
+                        }}>
+                          {m === 'url' ? '🔗 URL' : '📷 Depuis l\'appareil'}
+                        </button>
+                      ))}
+                    </div>
+
+                    {inputMode === 'url' ? (
+                      <div style={{ display: 'flex', gap: 8 }}>
+                        <input
+                          style={{ ...inp(), flex: 1 }} value={draft} autoFocus
+                          placeholder="https://images.unsplash.com/..."
+                          onChange={e => setDraft(e.target.value)}
+                          onKeyDown={e => { if (e.key === 'Enter') save(key); if (e.key === 'Escape') setEditing(null) }}
+                        />
+                        <button onClick={() => save(key)} style={{ ...btnPrimary, padding: '10px 18px', whiteSpace: 'nowrap' }}>OK</button>
+                        <button onClick={() => setEditing(null)} style={{ ...btnGhost, padding: '10px 14px' }}>✕</button>
+                      </div>
+                    ) : (
+                      <div>
+                        <input
+                          ref={el => { fileRefs.current[key] = el }}
+                          type="file" accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={e => { const f = e.target.files?.[0]; if (f) handleFileUpload(key, f) }}
+                        />
+                        <div
+                          onClick={() => fileRefs.current[key]?.click()}
+                          style={{
+                            border: '2px dashed rgba(30,96,145,0.25)', borderRadius: 10,
+                            padding: '18px', textAlign: 'center', cursor: 'pointer',
+                            background: 'rgba(46,134,171,0.03)', marginBottom: 10,
+                          }}
+                        >
+                          {draft && draft.startsWith('data:') ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                              <img src={draft} alt="preview" style={{ maxHeight: 80, borderRadius: 6, objectFit: 'contain' }} />
+                              <span style={{ fontSize: 11, color: '#2E86AB', fontWeight: 600 }}>Cliquer pour changer</span>
+                            </div>
+                          ) : (
+                            <>
+                              <div style={{ fontSize: 24, marginBottom: 4 }}>📷</div>
+                              <p style={{ fontSize: 13, fontWeight: 600, color: '#0B1B2E', margin: '0 0 2px' }}>Sélectionner depuis l'appareil</p>
+                              <p style={{ fontSize: 11, color: '#5A6B80', margin: 0 }}>JPG, PNG, WEBP</p>
+                            </>
+                          )}
+                        </div>
+                        <div style={{ display: 'flex', gap: 8 }}>
+                          <button
+                            onClick={() => { if (draft) save(key) }}
+                            disabled={!draft}
+                            style={{ ...btnPrimary, padding: '10px 18px', opacity: draft ? 1 : 0.5 }}
+                          >
+                            Enregistrer
+                          </button>
+                          <button onClick={() => setEditing(null)} style={{ ...btnGhost, padding: '10px 14px' }}>Annuler</button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span style={{ fontSize: 12, color: '#5A6B80', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {serviceImages[key]
+                        ? (serviceImages[key].startsWith('data:') ? '📷 Image depuis l\'appareil' : serviceImages[key])
+                        : <em>Aucune image</em>}
+                    </span>
+                    <button onClick={() => startEdit(key)} style={{ ...btnEdit, whiteSpace: 'nowrap', flexShrink: 0 }}>
+                      🖼️ Changer
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ))}

@@ -109,7 +109,7 @@ export default function Services() {
                 style={{ opacity: 0 }}
               >
                 {/* Photo with unified blue duotone overlay */}
-                <div className="relative" style={{ aspectRatio: '4/3', borderRadius: '20px 20px 0 0' }}>
+                <div className="service-img relative">
                   {/* Inner wrapper clips the image without clipping the icon badge */}
                   <div className="absolute inset-0 overflow-hidden" style={{ borderRadius: '20px 20px 0 0' }}>
                     <img
@@ -141,7 +141,7 @@ export default function Services() {
                     style={{
                       bottom: 0, left: '50%',
                       transform: 'translate(-50%, 50%)',
-                      width: '56px', height: '56px',
+                      width: 'clamp(44px, 8vw, 56px)', height: 'clamp(44px, 8vw, 56px)',
                       borderRadius: '9999px',
                       background: '#FFFFFF',
                       border: '4px solid #FFFFFF',
@@ -151,27 +151,29 @@ export default function Services() {
                   >
                     <div
                       className="flex items-center justify-center rounded-full"
-                      style={{ width: '100%', height: '100%', background: 'rgba(46,134,171,0.1)' }}
+                      style={{ width: '100%', height: '100%', background: `${service.color}18` }}
                     >
-                      <Icon size={22} style={{ color: service.color }} aria-hidden="true" />
+                      <Icon size={20} style={{ color: service.color }} aria-hidden="true" />
                     </div>
                   </div>
                 </div>
 
-                {/* Content — 36px top so the icon badge (28px below photo edge) doesn't overlap title */}
-                <div className="px-6 pb-6 lg:px-8 lg:pb-8" style={{ paddingTop: '36px' }}>
-                  <h3 className="h3-card" style={{ marginBottom: '16px', fontSize: '20px' }}>
+                {/* Content — paddingTop accommodates the icon badge */}
+                <div className="px-5 pb-5 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8" style={{ paddingTop: '32px' }}>
+                  <h3 className="h3-card" style={{ marginBottom: '12px' }}>
                     {service.title}
                   </h3>
-                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} role="list">
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} role="list">
                     {service.items.map(item => (
-                      <li key={item} className="flex items-start text-sm leading-relaxed" style={{ color: 'var(--text-muted)', gap: '12px' }}>
+                      <li key={item} className="flex items-start text-sm leading-relaxed" style={{ color: 'var(--text-muted)', gap: '10px' }}>
                         <span
-                          className="flex-shrink-0 rounded-full flex items-center justify-center"
-                          style={{ width: '20px', height: '20px', marginTop: '1px' }}
+                          className="flex-shrink-0 flex items-center justify-center rounded-full"
+                          style={{ width: '18px', height: '18px', marginTop: '2px', background: `${service.color}14`, flexShrink: 0 }}
                           aria-hidden="true"
                         >
-                          <span className="rounded-full" style={{ width: '6px', height: '6px', background: service.color, display: 'block' }} />
+                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                            <path d="M2 5.5l2 2 4-4" stroke={service.color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
                         </span>
                         {item}
                       </li>

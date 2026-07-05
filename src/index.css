@@ -246,6 +246,71 @@ h1, h2, h3, h4, h5 {
 }
 .btn-whatsapp:hover  { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(37, 211, 102, 0.55); }
 
+/* ─── Service image responsive aspect ratio ─────────────────────────────── */
+.service-img {
+  aspect-ratio: 16/9;
+  border-radius: 20px 20px 0 0;
+}
+@media (min-width: 640px) {
+  .service-img {
+    aspect-ratio: 4/3;
+  }
+}
+
+/* ─── Btn shimmer ────────────────────────────────────────────────────────── */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%);
+  transform: skewX(-15deg);
+  animation: shimmer 3.2s ease-in-out infinite 1s;
+  pointer-events: none;
+}
+@keyframes shimmer {
+  0%   { left: -100%; }
+  40%, 100% { left: 160%; }
+}
+
+/* ─── Animated checkmark ─────────────────────────────────────────────────── */
+@keyframes checkDraw {
+  from { stroke-dashoffset: 20; opacity: 0; }
+  to   { stroke-dashoffset: 0;  opacity: 1; }
+}
+.check-animated {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: checkDraw 0.4s ease forwards;
+}
+
+/* ─── Sparkle pulse ──────────────────────────────────────────────────────── */
+@keyframes sparklePop {
+  0%, 100% { transform: scale(1) rotate(0deg);   opacity: 0.7; }
+  50%       { transform: scale(1.35) rotate(20deg); opacity: 1; }
+}
+.sparkle-1 { animation: sparklePop 2.2s ease-in-out infinite; }
+.sparkle-2 { animation: sparklePop 2.2s ease-in-out infinite 0.7s; }
+.sparkle-3 { animation: sparklePop 2.2s ease-in-out infinite 1.4s; }
+
+/* ─── Step number pulse ──────────────────────────────────────────────────── */
+@keyframes stepPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(46,134,171,0.35); }
+  50%       { box-shadow: 0 0 0 10px rgba(46,134,171,0); }
+}
+.step-pulse { animation: stepPulse 2.8s ease-in-out infinite; }
+
+/* ─── Gradient move ──────────────────────────────────────────────────────── */
+@keyframes gradientMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 /* ─── Wave Divider ───────────────────────────────────────────────────────── */
 .wave-divider {
   height: 40px;
