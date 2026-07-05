@@ -65,14 +65,14 @@ export default function Processus() {
       <div className="container-page relative z-10">
         {/* Header */}
         <motion.div
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 32 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           style={{ maxWidth: 560, marginInline: 'auto' }}
         >
-          <span className="eyebrow mb-6 block">Simple & rapide</span>
-          <h2 className="h2-section mb-5">
+          <span className="eyebrow mb-7 block">Simple & rapide</span>
+          <h2 className="h2-section mb-6">
             3 étapes vers un <span className="gradient-text">résultat parfait</span>
           </h2>
           <p className="body-lg">
@@ -81,7 +81,7 @@ export default function Processus() {
         </motion.div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
           {/* Connector line (desktop) */}
           <div
             className="hidden md:block absolute top-10 left-0 right-0 pointer-events-none"
@@ -103,13 +103,13 @@ export default function Processus() {
               >
                 <div
                   className="card flex flex-col items-center text-center h-full"
-                  style={{ padding: 'clamp(20px, 4vw, 32px)', background: 'var(--white)' }}
+                  style={{ padding: 'clamp(28px, 4vw, 44px)', background: 'var(--white)' }}
                 >
                   {/* Step number badge */}
                   <div
-                    className="step-pulse flex items-center justify-center rounded-full mb-5 relative"
+                    className="step-pulse flex items-center justify-center rounded-full mb-6 relative"
                     style={{
-                      width: 64, height: 64,
+                      width: 72, height: 72,
                       background: step.bg,
                       border: `2px solid ${step.border}`,
                       color: step.color,
@@ -132,10 +132,10 @@ export default function Processus() {
                     </span>
                   </div>
 
-                  <h3 className="h3-card mb-3" style={{ fontSize: '18px' }}>
+                  <h3 className="h3-card mb-4" style={{ fontSize: '19px' }}>
                     {step.title}
                   </h3>
-                  <p className="body-md" style={{ fontSize: '14px', lineHeight: 1.7 }}>
+                  <p className="body-md" style={{ fontSize: '15px', lineHeight: 1.75 }}>
                     {step.desc}
                   </p>
                 </div>
@@ -146,7 +146,7 @@ export default function Processus() {
 
         {/* Bottom CTA */}
         <motion.div
-          className="text-center mt-12"
+          className="text-center mt-16"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.55, duration: 0.6 }}

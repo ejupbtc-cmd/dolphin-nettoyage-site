@@ -88,8 +88,8 @@ export default function Services() {
     >
       <div className="container-page">
         {/* Section header */}
-        <div ref={titleRef} className="text-center mb-8 md:mb-12" style={{ opacity: 0, maxWidth: '640px', marginInline: 'auto' }}>
-          <span className="eyebrow mb-6 block">Ce que nous faisons</span>
+        <div ref={titleRef} className="text-center mb-12 md:mb-16" style={{ opacity: 0, maxWidth: '640px', marginInline: 'auto' }}>
+          <span className="eyebrow mb-7 block">Ce que nous faisons</span>
           <h2 className="h2-section mb-6">
             Nettoyage <span className="gradient-text">haut de gamme</span>
           </h2>
@@ -99,7 +99,7 @@ export default function Services() {
         </div>
 
         {/* Cards grid */}
-        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {services.map(service => {
             const Icon = service.icon
             return (
@@ -160,11 +160,11 @@ export default function Services() {
                 </div>
 
                 {/* Content — paddingTop accommodates the icon badge */}
-                <div className="px-5 pb-5 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8" style={{ paddingTop: '32px' }}>
-                  <h3 className="h3-card" style={{ marginBottom: '12px' }}>
+                <div className="px-6 pb-7 sm:px-7 sm:pb-8 lg:px-8 lg:pb-9" style={{ paddingTop: '36px' }}>
+                  <h3 className="h3-card" style={{ marginBottom: '14px' }}>
                     {service.title}
                   </h3>
-                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} role="list">
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} role="list">
                     {service.items.map(item => (
                       <li key={item} className="flex items-start text-sm leading-relaxed" style={{ color: 'var(--text-muted)', gap: '10px' }}>
                         <span
