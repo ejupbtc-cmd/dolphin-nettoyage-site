@@ -65,7 +65,7 @@ export default function Processus() {
       <div className="container-page relative z-10">
         {/* Header */}
         <motion.div
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-8 md:mb-12"
           initial={{ opacity: 0, y: 32 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -102,8 +102,8 @@ export default function Processus() {
                 style={{ zIndex: 1 }}
               >
                 <div
-                  className="card flex flex-col items-center text-center p-7 lg:p-8 h-full"
-                  style={{ background: 'var(--white)' }}
+                  className="card flex flex-col items-center text-center h-full"
+                  style={{ padding: 'clamp(20px, 4vw, 32px)', background: 'var(--white)' }}
                 >
                   {/* Step number badge */}
                   <div

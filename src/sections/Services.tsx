@@ -88,7 +88,7 @@ export default function Services() {
     >
       <div className="container-page">
         {/* Section header */}
-        <div ref={titleRef} className="text-center mb-10 md:mb-16" style={{ opacity: 0, maxWidth: '640px', marginInline: 'auto' }}>
+        <div ref={titleRef} className="text-center mb-8 md:mb-12" style={{ opacity: 0, maxWidth: '640px', marginInline: 'auto' }}>
           <span className="eyebrow mb-6 block">Ce que nous faisons</span>
           <h2 className="h2-section mb-6">
             Nettoyage <span className="gradient-text">haut de gamme</span>
@@ -135,9 +135,9 @@ export default function Services() {
                     />
                   </div>
 
-                  {/* Icon badge — straddling the photo/content boundary (bottom edge of photo) */}
+                  {/* Icon badge — outer div handles positioning only (no animation = no transform conflict) */}
                   <div
-                    className={`absolute flex items-center justify-center ${service.floatClass}`}
+                    className="absolute flex items-center justify-center"
                     style={{
                       bottom: 0, left: '50%',
                       transform: 'translate(-50%, 50%)',
@@ -149,9 +149,10 @@ export default function Services() {
                       zIndex: 2,
                     }}
                   >
+                    {/* Inner div gets the float animation — translateY only, no conflict */}
                     <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{ width: '100%', height: '100%', background: `${service.color}18` }}
+                      className={`flex items-center justify-center rounded-full w-full h-full ${service.floatClass}`}
+                      style={{ background: `${service.color}18` }}
                     >
                       <Icon size={20} style={{ color: service.color }} aria-hidden="true" />
                     </div>

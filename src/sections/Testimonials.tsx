@@ -83,7 +83,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 36 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-14"
           style={{ maxWidth: '600px', marginInline: 'auto' }}
         >
           <span className="eyebrow mb-6 block">Avis clients</span>
@@ -96,7 +96,7 @@ export default function Testimonials() {
         </motion.div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 lg:gap-8">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.id}
@@ -104,7 +104,7 @@ export default function Testimonials() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 * i + 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="card flex flex-col"
-              style={{ padding: '32px', gap: '20px' }}
+              style={{ padding: 'clamp(20px, 4vw, 32px)', gap: '16px' }}
             >
               {/* Top row: stars + service tag */}
               <div className="flex items-start justify-between gap-3 flex-wrap">
@@ -164,7 +164,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5, duration: 0.7 }}
-          className="flex flex-wrap justify-center gap-6 mt-16"
+          className="flex flex-wrap justify-center gap-4 mt-10 md:mt-14"
         >
           <StatItem value={5.0} suffix="" label="Note moyenne" inView={inView} decimals={1} />
           <StatItem value={100} suffix="+" label="Clients satisfaits" inView={inView} />

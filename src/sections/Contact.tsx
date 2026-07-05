@@ -92,7 +92,7 @@ export default function Contact() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Header */}
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 md:mb-12">
             <span className="eyebrow mb-6 block">Contactez-nous</span>
             <h2 className="h2-section mb-5">
               Votre devis gratuit en{' '}

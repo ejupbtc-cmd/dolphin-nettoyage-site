@@ -83,11 +83,11 @@ h1, h2, h3, h4, h5 {
 @media (min-width: 1280px) { .container-page { padding-inline: 80px; } }
 
 .section-pad {
-  padding-block: 72px;
+  padding-block: 52px;
 }
-@media (min-width: 640px)  { .section-pad { padding-block: 88px; } }
-@media (min-width: 768px)  { .section-pad { padding-block: 108px; } }
-@media (min-width: 1024px) { .section-pad { padding-block: 136px; } }
+@media (min-width: 640px)  { .section-pad { padding-block: 72px; } }
+@media (min-width: 768px)  { .section-pad { padding-block: 96px; } }
+@media (min-width: 1024px) { .section-pad { padding-block: 128px; } }
 
 /* ─── Typography scale ──────────────────────────────────────────────────── */
 .eyebrow {
