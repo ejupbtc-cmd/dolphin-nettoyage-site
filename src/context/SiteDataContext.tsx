@@ -93,15 +93,18 @@ export function SiteDataProvider({ children }: { children: ReactNode }) {
   )
 
   useEffect(() => {
-    localStorage.setItem('dolphin_realisations', JSON.stringify(realisations))
+    try { localStorage.setItem('dolphin_realisations', JSON.stringify(realisations)) }
+    catch { console.warn('localStorage quota exceeded for realisations') }
   }, [realisations])
 
   useEffect(() => {
-    localStorage.setItem('dolphin_service_images', JSON.stringify(serviceImages))
+    try { localStorage.setItem('dolphin_service_images', JSON.stringify(serviceImages)) }
+    catch { console.warn('localStorage quota exceeded for service images') }
   }, [serviceImages])
 
   useEffect(() => {
-    localStorage.setItem('dolphin_testimonials', JSON.stringify(testimonials))
+    try { localStorage.setItem('dolphin_testimonials', JSON.stringify(testimonials)) }
+    catch { console.warn('localStorage quota exceeded for testimonials') }
   }, [testimonials])
 
   const setRealisations = (r: Realisation[]) => setRealisationsState(r)
