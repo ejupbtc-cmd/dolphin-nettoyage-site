@@ -725,110 +725,116 @@ function ServicesTab({ toast }: { toast: (msg: string, t?: 'success' | 'error') 
         <p style={{ color: '#5A6B80', fontSize: 14, margin: 0 }}>Modifiez les images des cartes services affichées sur le site.</p>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         {Object.entries(SERVICE_META).map(([key, meta]) => (
           <div key={key} style={{
             background: '#fff', borderRadius: 16, border: '1px solid rgba(30,96,145,0.1)',
             overflow: 'hidden', boxShadow: '0 2px 8px rgba(11,27,46,0.04)',
           }}>
-            <div style={{ display: 'flex' }}>
-              {/* Preview */}
-              <div style={{ width: 130, flexShrink: 0, background: '#EEF4FA', position: 'relative', minHeight: 100 }}>
-                {serviceImages[key] ? (
-                  <img src={serviceImages[key]} alt={meta.label} style={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: 100 }}
-                    onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
-                ) : (
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: 100, fontSize: 28 }}>{meta.emoji}</div>
-                )}
-              </div>
-              {/* Content */}
-              <div style={{ flex: 1, padding: '18px 20px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                  <span style={{ fontSize: 20 }}>{meta.emoji}</span>
-                  <p style={{ fontFamily: 'Sora,sans-serif', fontSize: 15, fontWeight: 700, color: '#0B1B2E', margin: 0 }}>{meta.label}</p>
-                </div>
-                {editing === key ? (
-                  <div>
-                    {/* Mode toggle */}
-                    <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
-                      {(['url', 'upload'] as const).map(m => (
-                        <button key={m} type="button" onClick={() => { setInputMode(m); setDraft('') }} style={{
-                          padding: '5px 14px', borderRadius: 8, border: 'none', cursor: 'pointer',
-                          fontWeight: 700, fontSize: 12,
-                          background: inputMode === m ? '#0B1B2E' : 'rgba(30,96,145,0.07)',
-                          color: inputMode === m ? '#fff' : '#5A6B80',
-                        }}>
-                          {m === 'url' ? '🔗 URL' : '📷 Depuis l\'appareil'}
-                        </button>
-                      ))}
-                    </div>
+            {/* Preview banner — full width, fixed height */}
+            <div style={{ width: '100%', height: 140, background: '#EEF4FA', position: 'relative', flexShrink: 0 }}>
+              {serviceImages[key] ? (
+                <img src={serviceImages[key]} alt={meta.label}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
+              ) : (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: 36 }}>{meta.emoji}</div>
+              )}
+            </div>
 
-                    {inputMode === 'url' ? (
-                      <div style={{ display: 'flex', gap: 8 }}>
-                        <input
-                          style={{ ...inp(), flex: 1 }} value={draft} autoFocus
-                          placeholder="https://images.unsplash.com/..."
-                          onChange={e => setDraft(e.target.value)}
-                          onKeyDown={e => { if (e.key === 'Enter') save(key); if (e.key === 'Escape') setEditing(null) }}
-                        />
-                        <button onClick={() => save(key)} style={{ ...btnPrimary, padding: '10px 18px', whiteSpace: 'nowrap' }}>OK</button>
-                        <button onClick={() => setEditing(null)} style={{ ...btnGhost, padding: '10px 14px' }}>✕</button>
-                      </div>
-                    ) : (
-                      <div>
-                        <input
-                          ref={el => { fileRefs.current[key] = el }}
-                          type="file" accept="image/*"
-                          style={{ display: 'none' }}
-                          onChange={e => { const f = e.target.files?.[0]; if (f) handleFileUpload(key, f) }}
-                        />
-                        <div
-                          onClick={() => fileRefs.current[key]?.click()}
-                          style={{
-                            border: '2px dashed rgba(30,96,145,0.25)', borderRadius: 10,
-                            padding: '18px', textAlign: 'center', cursor: 'pointer',
-                            background: 'rgba(46,134,171,0.03)', marginBottom: 10,
-                          }}
-                        >
-                          {draft && draft.startsWith('data:') ? (
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                              <img src={draft} alt="preview" style={{ maxHeight: 80, borderRadius: 6, objectFit: 'contain' }} />
-                              <span style={{ fontSize: 11, color: '#2E86AB', fontWeight: 600 }}>Cliquer pour changer</span>
-                            </div>
-                          ) : (
-                            <>
-                              <div style={{ fontSize: 24, marginBottom: 4 }}>📷</div>
-                              <p style={{ fontSize: 13, fontWeight: 600, color: '#0B1B2E', margin: '0 0 2px' }}>Sélectionner depuis l'appareil</p>
-                              <p style={{ fontSize: 11, color: '#5A6B80', margin: 0 }}>JPG, PNG, WEBP</p>
-                            </>
-                          )}
-                        </div>
-                        <div style={{ display: 'flex', gap: 8 }}>
-                          <button
-                            onClick={() => { if (draft) save(key) }}
-                            disabled={!draft}
-                            style={{ ...btnPrimary, padding: '10px 18px', opacity: draft ? 1 : 0.5 }}
-                          >
-                            Enregistrer
-                          </button>
-                          <button onClick={() => setEditing(null)} style={{ ...btnGhost, padding: '10px 14px' }}>Annuler</button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 12, color: '#5A6B80', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {serviceImages[key]
-                        ? (serviceImages[key].startsWith('data:') ? '📷 Image depuis l\'appareil' : serviceImages[key])
-                        : <em>Aucune image</em>}
-                    </span>
-                    <button onClick={() => startEdit(key)} style={{ ...btnEdit, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                      🖼️ Changer
-                    </button>
-                  </div>
-                )}
+            {/* Content */}
+            <div style={{ padding: '16px 18px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+                <span style={{ fontSize: 20 }}>{meta.emoji}</span>
+                <p style={{ fontFamily: 'Sora,sans-serif', fontSize: 15, fontWeight: 700, color: '#0B1B2E', margin: 0 }}>{meta.label}</p>
               </div>
+
+              {editing === key ? (
+                <div>
+                  {/* Mode toggle */}
+                  <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+                    {(['url', 'upload'] as const).map(m => (
+                      <button key={m} type="button" onClick={() => { setInputMode(m); setDraft('') }} style={{
+                        flex: 1, padding: '9px 12px', borderRadius: 10, border: 'none', cursor: 'pointer',
+                        fontWeight: 700, fontSize: 13,
+                        background: inputMode === m ? '#0B1B2E' : 'rgba(30,96,145,0.07)',
+                        color: inputMode === m ? '#fff' : '#5A6B80',
+                      }}>
+                        {m === 'url' ? '🔗 URL' : '📷 Photo'}
+                      </button>
+                    ))}
+                  </div>
+
+                  {inputMode === 'url' ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <input
+                        style={{ ...inp(), width: '100%' }} value={draft} autoFocus
+                        placeholder="https://images.unsplash.com/..."
+                        onChange={e => setDraft(e.target.value)}
+                        onKeyDown={e => { if (e.key === 'Enter') save(key); if (e.key === 'Escape') setEditing(null) }}
+                      />
+                      <div style={{ display: 'flex', gap: 8 }}>
+                        <button onClick={() => save(key)} style={{ ...btnPrimary, flex: 1, justifyContent: 'center' }}>Enregistrer</button>
+                        <button onClick={() => setEditing(null)} style={{ ...btnGhost, padding: '10px 18px' }}>Annuler</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <input
+                        ref={el => { fileRefs.current[key] = el }}
+                        type="file" accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={e => { const f = e.target.files?.[0]; if (f) handleFileUpload(key, f) }}
+                      />
+                      {/* Tap zone — large and obvious on mobile */}
+                      <button
+                        type="button"
+                        onClick={() => fileRefs.current[key]?.click()}
+                        style={{
+                          width: '100%', border: '2px dashed rgba(30,96,145,0.3)', borderRadius: 12,
+                          padding: '24px 16px', textAlign: 'center', cursor: 'pointer',
+                          background: 'rgba(46,134,171,0.04)', marginBottom: 12,
+                          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
+                        }}
+                      >
+                        {draft && draft.startsWith('data:') ? (
+                          <>
+                            <img src={draft} alt="preview" style={{ maxHeight: 90, borderRadius: 8, objectFit: 'contain' }} />
+                            <span style={{ fontSize: 12, color: '#2E86AB', fontWeight: 600 }}>Appuyer pour changer</span>
+                          </>
+                        ) : (
+                          <>
+                            <span style={{ fontSize: 32 }}>📷</span>
+                            <span style={{ fontSize: 14, fontWeight: 700, color: '#0B1B2E' }}>Choisir depuis l'appareil</span>
+                            <span style={{ fontSize: 12, color: '#5A6B80' }}>JPG, PNG, WEBP</span>
+                          </>
+                        )}
+                      </button>
+                      <div style={{ display: 'flex', gap: 8 }}>
+                        <button
+                          onClick={() => { if (draft) save(key) }}
+                          disabled={!draft}
+                          style={{ ...btnPrimary, flex: 1, justifyContent: 'center', opacity: draft ? 1 : 0.45 }}
+                        >
+                          Enregistrer
+                        </button>
+                        <button onClick={() => setEditing(null)} style={{ ...btnGhost, padding: '10px 18px' }}>Annuler</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <p style={{ fontSize: 12, color: '#5A6B80', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {serviceImages[key]
+                      ? (serviceImages[key].startsWith('data:') ? '📷 Image depuis l\'appareil' : serviceImages[key])
+                      : <em>Aucune image définie</em>}
+                  </p>
+                  <button onClick={() => startEdit(key)} style={{ ...btnPrimary, width: '100%', justifyContent: 'center' }}>
+                    🖼️ Modifier l'image
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ))}
