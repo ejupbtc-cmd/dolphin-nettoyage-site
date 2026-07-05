@@ -51,10 +51,10 @@ export default function Realisations() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-12 md:mb-16"
           style={{ maxWidth: '640px', marginInline: 'auto' }}
         >
-          <span className="eyebrow mb-6 block">Galerie</span>
+          <span className="eyebrow mb-7 block">Galerie</span>
           <h2 className="h2-section mb-6">
             Nos <span className="gradient-text">réalisations</span>
           </h2>
@@ -68,7 +68,7 @@ export default function Realisations() {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.15, duration: 0.6 }}
-          className="flex flex-wrap justify-center gap-3 mb-8 md:mb-10"
+          className="flex flex-wrap justify-center gap-3 mb-10 md:mb-12"
         >
           {CATEGORIES.filter(c => c === 'Tous' || realisations.some(r => r.category === c)).map(cat => (
             <button

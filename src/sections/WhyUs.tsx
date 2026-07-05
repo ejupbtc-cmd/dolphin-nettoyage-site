@@ -91,25 +91,25 @@ export default function WhyUs() {
 
           {/* ── Text side ── */}
           <div>
-            <span className="eyebrow mb-6 block">Pourquoi nous choisir</span>
+            <span className="eyebrow mb-8 block">Pourquoi nous choisir</span>
             <h2 className="h2-section mb-6">
               L'excellence qui fait<br />
               <span className="gradient-text">la différence</span>
             </h2>
-            <p className="body-lg" style={{ marginBottom: 'clamp(24px, 4vw, 48px)' }}>
+            <p className="body-lg" style={{ marginBottom: 'clamp(32px, 5vw, 56px)' }}>
               Nous ne faisons pas que nettoyer — nous nous engageons sur chaque prestation
               pour un résultat impeccable et une expérience client sans friction.
             </p>
 
-            <div className="flex flex-col" style={{ gap: 'clamp(16px, 3.5vw, 28px)' }}>
+            <div className="flex flex-col" style={{ gap: 'clamp(20px, 3.5vw, 36px)' }}>
               {differentiators.map((d, idx) => {
                 const Icon = d.icon
                 return (
-                  <div key={d.title} className="why-item flex group" style={{ opacity: 0, gap: '20px', alignItems: 'flex-start' }}>
+                  <div key={d.title} className="why-item flex group" style={{ opacity: 0, gap: '22px', alignItems: 'flex-start' }}>
                     <div
                       className={`flex-shrink-0 rounded-xl flex items-center justify-center relative ${d.floatClass}`}
                       style={{
-                        width: '52px', height: '52px',
+                        width: '56px', height: '56px',
                         background: `${d.color}12`,
                         border: `1.5px solid ${d.color}28`,
                         boxShadow: `0 2px 12px ${d.color}18`,
@@ -129,11 +129,11 @@ export default function WhyUs() {
                         />
                       )}
                     </div>
-                    <div style={{ paddingTop: '2px' }}>
-                      <h3 className="h3-card" style={{ fontSize: '17px', marginBottom: '6px' }}>
+                    <div style={{ paddingTop: '4px' }}>
+                      <h3 className="h3-card" style={{ fontSize: '17px', marginBottom: '8px' }}>
                         {d.title}
                       </h3>
-                      <p className="body-md" style={{ fontSize: '14px', lineHeight: 1.65 }}>
+                      <p className="body-md" style={{ fontSize: '15px', lineHeight: 1.7 }}>
                         {d.desc}
                       </p>
                     </div>

@@ -26,11 +26,11 @@ export default function ZoneIntervention() {
           initial={{ opacity: 0, y: 36 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-12 md:mb-16"
           style={{ maxWidth: '600px', marginInline: 'auto' }}
         >
-          <span className="eyebrow mb-6 block">Zone d'intervention</span>
-          <h2 className="h2-section mb-5">
+          <span className="eyebrow mb-7 block">Zone d'intervention</span>
+          <h2 className="h2-section mb-6">
             Tout le <span className="gradient-text">Canton de Vaud</span>
           </h2>
           <p className="body-lg">
