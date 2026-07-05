@@ -7,6 +7,7 @@ import Hero from './sections/Hero'
 import Services from './sections/Services'
 import WhyUs from './sections/WhyUs'
 import OfferBanner from './sections/OfferBanner'
+import Processus from './sections/Processus'
 import ZoneIntervention from './sections/ZoneIntervention'
 import Testimonials from './sections/Testimonials'
 import Realisations from './sections/Realisations'
@@ -25,7 +26,9 @@ function App() {
         <Services />
         <WaveDivider from="#EEF4FA" to="#FFFFFF" flip height={80} />
         <WhyUs />
-        <WaveDivider from="#FFFFFF" to="#0B1B2E" height={88} />
+        <WaveDivider from="#FFFFFF" to="#EEF4FA" height={80} />
+        <Processus />
+        <WaveDivider from="#EEF4FA" to="#0B1B2E" height={88} />
         <OfferBanner />
         <WaveDivider from="#0B1B2E" to="#EEF4FA" flip height={88} />
         <ZoneIntervention />
