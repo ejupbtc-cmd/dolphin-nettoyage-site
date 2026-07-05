@@ -17,6 +17,26 @@ const CAT_COLOR: Record<string, string> = {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function genId() { return Math.random().toString(36).slice(2) + Date.now().toString(36) }
 
+function compressImage(file: File, maxPx = 900, quality = 0.78): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      const scale = Math.min(1, maxPx / Math.max(img.width, img.height))
+      const w = Math.round(img.width * scale)
+      const h = Math.round(img.height * scale)
+      const canvas = document.createElement('canvas')
+      canvas.width = w
+      canvas.height = h
+      canvas.getContext('2d')!.drawImage(img, 0, 0, w, h)
+      resolve(canvas.toDataURL('image/jpeg', quality))
+    }
+    img.onerror = reject
+    img.src = url
+  })
+}
+
 function getYouTubeId(url: string) {
   const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
   return m ? m[1] : null
@@ -393,16 +413,16 @@ function RealisationModal({ initial, onSave, onClose }: {
                     type="file"
                     accept="image/*"
                     style={{ display: 'none' }}
-                    onChange={e => {
+                    onChange={async e => {
                       const file = e.target.files?.[0]
                       if (!file) return
-                      const reader = new FileReader()
-                      reader.onload = ev => {
-                        const result = ev.target?.result as string
-                        set('image', result)
+                      try {
+                        const compressed = await compressImage(file)
+                        set('image', compressed)
                         setErrors(err => ({ ...err, image: false }))
+                      } catch {
+                        set('image', '')
                       }
-                      reader.readAsDataURL(file)
                     }}
                   />
                   <div
@@ -687,13 +707,15 @@ function ServicesTab({ toast }: { toast: (msg: string, t?: 'success' | 'error') 
     toast('Image mise à jour ✓')
   }
 
-  const handleFileUpload = (_key: string, file: File) => {
-    const reader = new FileReader()
-    reader.onload = ev => {
-      const result = ev.target?.result as string
-      setDraft(result)
+  const handleFileUpload = async (_key: string, file: File) => {
+    try {
+      const compressed = await compressImage(file)
+      setDraft(compressed)
+    } catch {
+      const reader = new FileReader()
+      reader.onload = ev => { setDraft(ev.target?.result as string) }
+      reader.readAsDataURL(file)
     }
-    reader.readAsDataURL(file)
   }
 
   return (
