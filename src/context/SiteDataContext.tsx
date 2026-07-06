@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
 
 export interface Realisation {
   id: string
@@ -34,6 +34,11 @@ interface SiteDataContextValue extends SiteData {
   setRealisations: (r: Realisation[]) => void
   setServiceImages: (s: Record<string, string>) => void
   setTestimonials: (t: TestimonialData[]) => void
+  storageError: string | null
+  clearStorageError: () => void
+  exportData: () => void
+  importData: (json: string) => boolean
+  getStorageUsage: () => { usedKB: number; percentUsed: number }
 }
 
 const defaultTestimonials: TestimonialData[] = [
@@ -81,6 +86,15 @@ function loadFromStorage<T>(key: string, fallback: T): T {
   }
 }
 
+function safeSave(key: string, value: unknown): string | null {
+  try {
+    localStorage.setItem(key, JSON.stringify(value))
+    return null
+  } catch {
+    return `Espace de stockage plein — les modifications ne peuvent pas être sauvegardées. Exportez vos données pour ne pas les perdre.`
+  }
+}
+
 export function SiteDataProvider({ children }: { children: ReactNode }) {
   const [realisations, setRealisationsState] = useState<Realisation[]>(() =>
     loadFromStorage('dolphin_realisations', [])
@@ -91,28 +105,69 @@ export function SiteDataProvider({ children }: { children: ReactNode }) {
   const [testimonials, setTestimonialsState] = useState<TestimonialData[]>(() =>
     loadFromStorage('dolphin_testimonials', defaultTestimonials)
   )
+  const [storageError, setStorageError] = useState<string | null>(null)
 
   useEffect(() => {
-    try { localStorage.setItem('dolphin_realisations', JSON.stringify(realisations)) }
-    catch { console.warn('localStorage quota exceeded for realisations') }
+    const err = safeSave('dolphin_realisations', realisations)
+    if (err) setStorageError(err)
   }, [realisations])
 
   useEffect(() => {
-    try { localStorage.setItem('dolphin_service_images', JSON.stringify(serviceImages)) }
-    catch { console.warn('localStorage quota exceeded for service images') }
+    const err = safeSave('dolphin_service_images', serviceImages)
+    if (err) setStorageError(err)
   }, [serviceImages])
 
   useEffect(() => {
-    try { localStorage.setItem('dolphin_testimonials', JSON.stringify(testimonials)) }
-    catch { console.warn('localStorage quota exceeded for testimonials') }
+    const err = safeSave('dolphin_testimonials', testimonials)
+    if (err) setStorageError(err)
   }, [testimonials])
 
   const setRealisations = (r: Realisation[]) => setRealisationsState(r)
   const setServiceImages = (s: Record<string, string>) => setServiceImagesState(s)
   const setTestimonials = (t: TestimonialData[]) => setTestimonialsState(t)
 
+  const clearStorageError = useCallback(() => setStorageError(null), [])
+
+  const exportData = useCallback(() => {
+    const data = { realisations, serviceImages, testimonials, exportedAt: new Date().toISOString() }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `dolphin-data-${new Date().toISOString().slice(0, 10)}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }, [realisations, serviceImages, testimonials])
+
+  const importData = useCallback((json: string): boolean => {
+    try {
+      const data = JSON.parse(json)
+      if (data.realisations) setRealisationsState(data.realisations)
+      if (data.serviceImages) setServiceImagesState(data.serviceImages)
+      if (data.testimonials) setTestimonialsState(data.testimonials)
+      return true
+    } catch {
+      return false
+    }
+  }, [])
+
+  const getStorageUsage = useCallback(() => {
+    try {
+      const keys = ['dolphin_realisations', 'dolphin_service_images', 'dolphin_testimonials']
+      const usedBytes = keys.reduce((sum, k) => sum + (localStorage.getItem(k) || '').length, 0)
+      const maxBytes = 5 * 1024 * 1024
+      return { usedKB: Math.round(usedBytes / 1024), percentUsed: Math.min(100, Math.round(usedBytes / maxBytes * 100)) }
+    } catch {
+      return { usedKB: 0, percentUsed: 0 }
+    }
+  }, [realisations, serviceImages, testimonials])
+
   return (
-    <SiteDataContext.Provider value={{ realisations, serviceImages, testimonials, setRealisations, setServiceImages, setTestimonials }}>
+    <SiteDataContext.Provider value={{
+      realisations, serviceImages, testimonials,
+      setRealisations, setServiceImages, setTestimonials,
+      storageError, clearStorageError, exportData, importData, getStorageUsage,
+    }}>
       {children}
     </SiteDataContext.Provider>
   )

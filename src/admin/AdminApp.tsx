@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useSiteData, type Realisation, type TestimonialData } from '../context/SiteDataContext'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -17,7 +17,7 @@ const CAT_COLOR: Record<string, string> = {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function genId() { return Math.random().toString(36).slice(2) + Date.now().toString(36) }
 
-function compressImage(file: File, maxPx = 900, quality = 0.78): Promise<string> {
+function compressImage(file: File, maxPx = 600, quality = 0.65): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image()
     const url = URL.createObjectURL(file)
@@ -231,15 +231,39 @@ function Sidebar({ tab, setTab, onLogout, onClose }: {
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 function DashboardTab({ setTab }: { setTab: (t: Tab) => void }) {
-  const { realisations, testimonials } = useSiteData()
+  const { realisations, testimonials, exportData, importData, getStorageUsage } = useSiteData()
+  const { toast, show: showToast } = useToast()
+  const importRef = useRef<HTMLInputElement>(null)
+  const [storage, setStorage] = useState({ usedKB: 0, percentUsed: 0 })
+
+  useEffect(() => {
+    setStorage(getStorageUsage())
+  }, [realisations, testimonials, getStorageUsage])
+
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = ev => {
+      const ok = importData(ev.target?.result as string)
+      showToast(ok ? 'Données importées avec succès ✓' : 'Fichier invalide', ok ? 'success' : 'error')
+    }
+    reader.readAsText(file)
+    e.target.value = ''
+  }
+
   const stats = [
     { label: 'Réalisations', value: realisations.length, icon: '◼', color: '#1E6091', tab: 'realisations' as Tab },
     { label: 'Témoignages', value: testimonials.length, icon: '★', color: '#2A9D6E', tab: 'temoignages' as Tab },
     { label: 'Services',     value: 4,                  icon: '◈', color: '#7B5EA7', tab: 'services' as Tab },
   ]
+
+  const storageColor = storage.percentUsed >= 85 ? '#c0392b' : storage.percentUsed >= 60 ? '#e67e22' : '#2A9D6E'
+
   return (
     <div>
-      <div style={{ marginBottom: 32 }}>
+      <Toast toast={toast} />
+      <div style={{ marginBottom: 28 }}>
         <h1 style={{ fontFamily: 'Sora,sans-serif', fontSize: 26, fontWeight: 800, color: '#0B1B2E', margin: '0 0 6px' }}>
           Bonjour 👋
         </h1>
@@ -249,45 +273,72 @@ function DashboardTab({ setTab }: { setTab: (t: Tab) => void }) {
       </div>
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px,1fr))', gap: 16, marginBottom: 36 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px,1fr))', gap: 14, marginBottom: 28 }}>
         {stats.map(s => (
           <button key={s.label} onClick={() => setTab(s.tab)} style={{
             background: '#fff', border: '1px solid rgba(30,96,145,0.1)', borderRadius: 16,
-            padding: '24px 20px', cursor: 'pointer', textAlign: 'left',
+            padding: '20px 16px', cursor: 'pointer', textAlign: 'left',
             boxShadow: '0 2px 12px rgba(11,27,46,0.06)', transition: 'all 0.2s',
           }}>
-            <div style={{ fontSize: 22, marginBottom: 12 }}>{s.icon}</div>
-            <div style={{ fontFamily: 'Sora,sans-serif', fontSize: 32, fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.value}</div>
-            <div style={{ fontSize: 13, color: '#5A6B80', marginTop: 6, fontWeight: 600 }}>{s.label}</div>
+            <div style={{ fontSize: 20, marginBottom: 10 }}>{s.icon}</div>
+            <div style={{ fontFamily: 'Sora,sans-serif', fontSize: 30, fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.value}</div>
+            <div style={{ fontSize: 12, color: '#5A6B80', marginTop: 5, fontWeight: 600 }}>{s.label}</div>
           </button>
         ))}
       </div>
 
       {/* Quick actions */}
-      <h2 style={{ fontFamily: 'Sora,sans-serif', fontSize: 16, fontWeight: 700, color: '#0B1B2E', marginBottom: 16 }}>
+      <h2 style={{ fontFamily: 'Sora,sans-serif', fontSize: 15, fontWeight: 700, color: '#0B1B2E', marginBottom: 12 }}>
         Actions rapides
       </h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px,1fr))', gap: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px,1fr))', gap: 10, marginBottom: 28 }}>
         {[
-          { label: '+ Ajouter une réalisation', sub: 'Photo ou vidéo', tab: 'realisations' as Tab, color: '#1E6091' },
-          { label: '+ Ajouter un témoignage',  sub: 'Avis client',    tab: 'temoignages' as Tab, color: '#2A9D6E' },
-          { label: '🖼️ Modifier les images',   sub: 'Section services', tab: 'services' as Tab, color: '#7B5EA7' },
+          { label: '+ Nouvelle réalisation', sub: 'Photo ou vidéo', tab: 'realisations' as Tab, color: '#1E6091' },
+          { label: '+ Nouveau témoignage',   sub: 'Avis client',    tab: 'temoignages' as Tab, color: '#2A9D6E' },
+          { label: '🖼️ Images services',     sub: 'Section services', tab: 'services' as Tab, color: '#7B5EA7' },
         ].map(a => (
           <button key={a.label} onClick={() => setTab(a.tab)} style={{
             background: `${a.color}10`, border: `1.5px solid ${a.color}28`, borderRadius: 12,
-            padding: '16px 18px', cursor: 'pointer', textAlign: 'left', color: a.color,
+            padding: '14px 16px', cursor: 'pointer', textAlign: 'left', color: a.color,
           }}>
-            <div style={{ fontSize: 14, fontWeight: 700 }}>{a.label}</div>
-            <div style={{ fontSize: 12, opacity: 0.7, marginTop: 4 }}>{a.sub}</div>
+            <div style={{ fontSize: 13, fontWeight: 700 }}>{a.label}</div>
+            <div style={{ fontSize: 11, opacity: 0.7, marginTop: 3 }}>{a.sub}</div>
           </button>
         ))}
       </div>
 
+      {/* Storage + Backup */}
+      <div style={{ background: '#fff', border: '1px solid rgba(30,96,145,0.1)', borderRadius: 16, padding: '18px 20px', marginBottom: 20, boxShadow: '0 2px 8px rgba(11,27,46,0.04)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#0B1B2E' }}>💾 Stockage local</span>
+          <span style={{ fontSize: 12, fontWeight: 600, color: storageColor }}>{storage.usedKB} Ko / ~5 000 Ko</span>
+        </div>
+        <div style={{ background: 'rgba(30,96,145,0.08)', borderRadius: 999, height: 8, overflow: 'hidden', marginBottom: 14 }}>
+          <div style={{ height: '100%', width: `${storage.percentUsed}%`, background: storageColor, borderRadius: 999, transition: 'width 0.4s ease' }} />
+        </div>
+        {storage.percentUsed >= 70 && (
+          <p style={{ fontSize: 12, color: '#c0392b', marginBottom: 12, lineHeight: 1.5 }}>
+            ⚠️ Stockage presque plein — exportez vos données pour éviter toute perte.
+          </p>
+        )}
+        <p style={{ fontSize: 12, color: '#5A6B80', marginBottom: 12, lineHeight: 1.5 }}>
+          Les données sont enregistrées dans ce navigateur. Utilisez l'export pour les sauvegarder ou les transférer sur un autre appareil.
+        </p>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <button onClick={exportData} style={{ ...btnPrimary, fontSize: 13, padding: '9px 18px' }}>
+            ⬇ Exporter les données
+          </button>
+          <button onClick={() => importRef.current?.click()} style={{ ...btnGhost, fontSize: 13, padding: '9px 18px' }}>
+            ⬆ Importer
+          </button>
+          <input ref={importRef} type="file" accept=".json" style={{ display: 'none' }} onChange={handleImport} />
+        </div>
+      </div>
+
       {/* Info */}
-      <div style={{ marginTop: 32, background: 'rgba(91,192,222,0.08)', border: '1px solid rgba(91,192,222,0.25)', borderRadius: 14, padding: '18px 20px' }}>
+      <div style={{ background: 'rgba(91,192,222,0.08)', border: '1px solid rgba(91,192,222,0.25)', borderRadius: 14, padding: '16px 18px' }}>
         <p style={{ fontSize: 13, color: '#14304D', margin: 0, lineHeight: 1.6 }}>
-          <strong>💡 Astuce :</strong> Les réalisations ajoutées ici apparaissent automatiquement dans la section Galerie du site.
-          Pour les vidéos, collez une URL YouTube ou Vimeo.
+          <strong>💡 Astuce :</strong> Les réalisations ajoutées apparaissent dans la Galerie du site. Pour les vidéos, collez une URL YouTube ou Vimeo.
         </p>
       </div>
     </div>
@@ -986,6 +1037,25 @@ function TestimonialsTab({ toast }: { toast: (msg: string, t?: 'success' | 'erro
   )
 }
 
+// ─── Storage Error Banner ─────────────────────────────────────────────────────
+function StorageErrorBanner() {
+  const { storageError, clearStorageError, exportData } = useSiteData()
+  if (!storageError) return null
+  return (
+    <div style={{
+      background: '#c0392b', color: '#fff', padding: '12px 20px',
+      display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap',
+      fontSize: 13, fontWeight: 600, flexShrink: 0,
+    }}>
+      <span style={{ flex: 1 }}>⚠️ {storageError}</span>
+      <button onClick={exportData} style={{ background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.4)', borderRadius: 8, padding: '6px 14px', color: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: 700 }}>
+        Exporter maintenant
+      </button>
+      <button onClick={clearStorageError} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', cursor: 'pointer', fontSize: 18, padding: '0 4px' }}>✕</button>
+    </div>
+  )
+}
+
 // ─── Main Admin ───────────────────────────────────────────────────────────────
 export default function AdminApp() {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem('dolphin_admin_auth') === '1')
@@ -1027,8 +1097,11 @@ export default function AdminApp() {
           <a href="/" style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, textDecoration: 'none', fontWeight: 600 }}>Site ↗</a>
         </div>
 
+        {/* Storage error banner */}
+        <StorageErrorBanner />
+
         {/* Content */}
-        <main style={{ flex: 1, padding: 'clamp(20px, 4vw, 40px)', maxWidth: 1100, width: '100%', margin: '0 auto' }}>
+        <main style={{ flex: 1, padding: 'clamp(16px, 4vw, 40px)', maxWidth: 1100, width: '100%', margin: '0 auto' }}>
           {tab === 'dashboard'    && <DashboardTab setTab={setTab} />}
           {tab === 'realisations' && <RealisationsTab toast={showToast} />}
           {tab === 'services'     && <ServicesTab toast={showToast} />}
