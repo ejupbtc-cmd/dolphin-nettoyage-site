@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { useSiteData, type Realisation, type TestimonialData } from '../context/SiteDataContext'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -231,14 +231,9 @@ function Sidebar({ tab, setTab, onLogout, onClose }: {
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 function DashboardTab({ setTab }: { setTab: (t: Tab) => void }) {
-  const { realisations, testimonials, exportData, importData, getStorageUsage } = useSiteData()
+  const { realisations, testimonials, exportData, importData } = useSiteData()
   const { toast, show: showToast } = useToast()
   const importRef = useRef<HTMLInputElement>(null)
-  const [storage, setStorage] = useState({ usedKB: 0, percentUsed: 0 })
-
-  useEffect(() => {
-    setStorage(getStorageUsage())
-  }, [realisations, testimonials, getStorageUsage])
 
   const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -257,8 +252,6 @@ function DashboardTab({ setTab }: { setTab: (t: Tab) => void }) {
     { label: 'Témoignages', value: testimonials.length, icon: '★', color: '#2A9D6E', tab: 'temoignages' as Tab },
     { label: 'Services',     value: 4,                  icon: '◈', color: '#7B5EA7', tab: 'services' as Tab },
   ]
-
-  const storageColor = storage.percentUsed >= 85 ? '#c0392b' : storage.percentUsed >= 60 ? '#e67e22' : '#2A9D6E'
 
   return (
     <div>
@@ -307,29 +300,21 @@ function DashboardTab({ setTab }: { setTab: (t: Tab) => void }) {
         ))}
       </div>
 
-      {/* Storage + Backup */}
+      {/* DB status + export */}
       <div style={{ background: '#fff', border: '1px solid rgba(30,96,145,0.1)', borderRadius: 16, padding: '18px 20px', marginBottom: 20, boxShadow: '0 2px 8px rgba(11,27,46,0.04)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: '#0B1B2E' }}>💾 Stockage local</span>
-          <span style={{ fontSize: 12, fontWeight: 600, color: storageColor }}>{storage.usedKB} Ko / ~5 000 Ko</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+          <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#2A9D6E', flexShrink: 0 }} />
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#0B1B2E' }}>Base de données Supabase connectée</span>
         </div>
-        <div style={{ background: 'rgba(30,96,145,0.08)', borderRadius: 999, height: 8, overflow: 'hidden', marginBottom: 14 }}>
-          <div style={{ height: '100%', width: `${storage.percentUsed}%`, background: storageColor, borderRadius: 999, transition: 'width 0.4s ease' }} />
-        </div>
-        {storage.percentUsed >= 70 && (
-          <p style={{ fontSize: 12, color: '#c0392b', marginBottom: 12, lineHeight: 1.5 }}>
-            ⚠️ Stockage presque plein — exportez vos données pour éviter toute perte.
-          </p>
-        )}
-        <p style={{ fontSize: 12, color: '#5A6B80', marginBottom: 12, lineHeight: 1.5 }}>
-          Les données sont enregistrées dans ce navigateur. Utilisez l'export pour les sauvegarder ou les transférer sur un autre appareil.
+        <p style={{ fontSize: 12, color: '#5A6B80', marginBottom: 14, lineHeight: 1.5 }}>
+          Les données sont sauvegardées en ligne et disponibles depuis n'importe quel appareil.
         </p>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <button onClick={exportData} style={{ ...btnPrimary, fontSize: 13, padding: '9px 18px' }}>
-            ⬇ Exporter les données
+            ⬇ Exporter JSON
           </button>
           <button onClick={() => importRef.current?.click()} style={{ ...btnGhost, fontSize: 13, padding: '9px 18px' }}>
-            ⬆ Importer
+            ⬆ Importer JSON
           </button>
           <input ref={importRef} type="file" accept=".json" style={{ display: 'none' }} onChange={handleImport} />
         </div>
@@ -1037,21 +1022,18 @@ function TestimonialsTab({ toast }: { toast: (msg: string, t?: 'success' | 'erro
   )
 }
 
-// ─── Storage Error Banner ─────────────────────────────────────────────────────
-function StorageErrorBanner() {
-  const { storageError, clearStorageError, exportData } = useSiteData()
-  if (!storageError) return null
+// ─── DB Error Banner ──────────────────────────────────────────────────────────
+function DbErrorBanner() {
+  const { dbError, clearDbError } = useSiteData()
+  if (!dbError) return null
   return (
     <div style={{
       background: '#c0392b', color: '#fff', padding: '12px 20px',
       display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap',
       fontSize: 13, fontWeight: 600, flexShrink: 0,
     }}>
-      <span style={{ flex: 1 }}>⚠️ {storageError}</span>
-      <button onClick={exportData} style={{ background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.4)', borderRadius: 8, padding: '6px 14px', color: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: 700 }}>
-        Exporter maintenant
-      </button>
-      <button onClick={clearStorageError} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', cursor: 'pointer', fontSize: 18, padding: '0 4px' }}>✕</button>
+      <span style={{ flex: 1 }}>⚠️ {dbError}</span>
+      <button onClick={clearDbError} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', cursor: 'pointer', fontSize: 18, padding: '0 4px' }}>✕</button>
     </div>
   )
 }
@@ -1062,8 +1044,19 @@ export default function AdminApp() {
   const [tab, setTab] = useState<Tab>('dashboard')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { toast, show: showToast } = useToast()
+  const { loading } = useSiteData()
 
   if (!authed) return <LoginScreen onLogin={() => setAuthed(true)} />
+
+  if (loading) return (
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg,#0B1B2E 0%,#14304D 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 20 }}>
+      <span style={{ fontSize: 48 }}>🐬</span>
+      <div style={{ color: '#fff', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 16 }}>Chargement…</div>
+      <div style={{ width: 200, height: 4, background: 'rgba(255,255,255,0.1)', borderRadius: 999, overflow: 'hidden' }}>
+        <div style={{ height: '100%', width: '60%', background: 'linear-gradient(90deg,#2E86AB,#5BC0DE)', borderRadius: 999, animation: 'shimmer 1.2s ease-in-out infinite' }} />
+      </div>
+    </div>
+  )
 
   const logout = () => { sessionStorage.removeItem('dolphin_admin_auth'); setAuthed(false) }
 
@@ -1097,8 +1090,8 @@ export default function AdminApp() {
           <a href="/" style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, textDecoration: 'none', fontWeight: 600 }}>Site ↗</a>
         </div>
 
-        {/* Storage error banner */}
-        <StorageErrorBanner />
+        {/* DB error banner */}
+        <DbErrorBanner />
 
         {/* Content */}
         <main style={{ flex: 1, padding: 'clamp(16px, 4vw, 40px)', maxWidth: 1100, width: '100%', margin: '0 auto' }}>
