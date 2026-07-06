@@ -83,8 +83,9 @@ h1, h2, h3, h4, h5 {
 @media (min-width: 1280px) { .container-page { padding-inline: 80px; } }
 
 .section-pad {
-  padding-block: 72px;
+  padding-block: 56px;
 }
+@media (min-width: 480px)  { .section-pad { padding-block: 72px; } }
 @media (min-width: 640px)  { .section-pad { padding-block: 96px; } }
 @media (min-width: 768px)  { .section-pad { padding-block: 120px; } }
 @media (min-width: 1024px) { .section-pad { padding-block: 160px; } }
@@ -203,11 +204,13 @@ h1, h2, h3, h4, h5 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 28px;
-  min-height: 52px;
+  padding: 15px 28px;
+  min-height: 54px;
   border-radius: 14px;
   font-size: 15px;
   font-weight: 700;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 @media (min-width: 640px) {
   .btn-primary,
@@ -268,9 +271,30 @@ h1, h2, h3, h4, h5 {
   aspect-ratio: 16/9;
   border-radius: 20px 20px 0 0;
 }
+@media (min-width: 480px) {
+  .service-img {
+    aspect-ratio: 16/9;
+  }
+}
 @media (min-width: 640px) {
   .service-img {
     aspect-ratio: 4/3;
+  }
+}
+
+/* ─── Mobile touch improvements ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .card {
+    border-radius: 16px;
+  }
+  .card:hover {
+    transform: none;
+  }
+  .card:active {
+    transform: scale(0.985);
+  }
+  .h1-hero {
+    letter-spacing: -0.025em;
   }
 }
 

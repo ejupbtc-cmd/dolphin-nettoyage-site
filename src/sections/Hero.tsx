@@ -184,10 +184,11 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.15, duration: 0.8 }}
-          className="flex flex-col sm:flex-row items-center gap-3 sm:gap-8"
+          className="grid grid-cols-2 sm:flex sm:flex-row items-center gap-3 sm:gap-8 w-full sm:w-auto"
+          style={{ maxWidth: 360 }}
         >
           {trustItems.map(item => (
-            <div key={item.label} className="flex items-center gap-2">
+            <div key={item.label} className="flex items-center gap-2 justify-center sm:justify-start">
               <span className="text-base" aria-hidden="true">{item.icon}</span>
               <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{item.label}</span>
             </div>
